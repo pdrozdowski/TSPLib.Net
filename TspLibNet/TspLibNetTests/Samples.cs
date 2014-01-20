@@ -84,9 +84,8 @@
                     writer.Flush();
                     writer.Close();
                 }
-
-                stream.Position = 0;
-                return stream;
+                                
+                return new MemoryStream(stream.GetBuffer());
             }
         }
 
@@ -164,8 +163,7 @@
                     writer.Close();
                 }
 
-                stream.Position = 0;
-                return stream;
+                return new MemoryStream(stream.GetBuffer());
             }
         }
     }
