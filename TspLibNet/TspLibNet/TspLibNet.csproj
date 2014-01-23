@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DistanceFunctions\DistanceFunctionBase.cs" />
+    <Compile Include="Exceptions\TourInvalidException.cs" />
     <Compile Include="Exceptions\GraphException.cs" />
     <Compile Include="Graph\Demand\DictionaryBasedDemandProvider.cs" />
     <Compile Include="Graph\Demand\IDemandProvider.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Graph\Nodes\INodeProvider.cs" />
     <Compile Include="Graph\Nodes\DimensionBasedNodeProvider.cs" />
     <Compile Include="Graph\Nodes\NodeListBasedNodeProvider.cs" />
+    <Compile Include="IProblem.cs" />
     <Compile Include="TSP\TspFileDataExtractor.cs" />
     <Compile Include="Graph\EdgeWeights\NodeAdjacencyBasedWeightProvider.cs" />
     <Compile Include="Graph\Edges\EdgesCollection.cs" />

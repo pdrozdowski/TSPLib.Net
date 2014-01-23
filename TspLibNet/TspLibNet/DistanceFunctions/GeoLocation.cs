@@ -13,11 +13,6 @@
     public class GeoLocation
     {
         /// <summary>
-        /// Approximate PI as per TSPLIB95 definition
-        /// </summary>
-        public const double PI = 3.141592;
-
-        /// <summary>
         /// Creates a new instance of geographical location
         /// </summary>
         /// <param name="latitude">location latitude</param>
@@ -55,9 +50,10 @@
         /// <returns>converted value</returns>
         protected double CalcGeoValue(double value)
         {
-            double deg = MathExtensions.NearestInt(value);
+            double deg = (int)(value);
             double min = value - deg;
-            return GeoLocation.PI * (deg + 5.0 * min / 3.0) / 180.0;
+            double rad = deg + (5.0 * min) / 3.0;
+            return (Math.PI * rad) / 180.0;
         }
     }
 }

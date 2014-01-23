@@ -43,7 +43,7 @@
         /// <returns>Weight of a given edge</returns>
         public double GetWeight(INode first, INode second)
         {
-            return this.Weights[first.Id, second.Id];
+            return this.Weights[first.Id - 1, second.Id - 1];
         }
     }
 }

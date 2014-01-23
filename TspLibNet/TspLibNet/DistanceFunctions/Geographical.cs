@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using TspLibNet.Graph.Nodes;
+    using TspLibNet.Extensions;
 
     /// <summary>
     /// Geographical distance function
@@ -29,9 +30,11 @@
 
             double q1 = Math.Cos(aGeo.Longitude - bGeo.Longitude);
             double q2 = Math.Cos(aGeo.Latitude - bGeo.Latitude);
-            double q3 = Math.Cos(aGeo.Latitude + aGeo.Latitude);
-
-            return (int)(Geographical.EarthSphereRadius * Math.Acos(0.5 * ((1.0 + q1) * q2 - (1.0 - q1) * q3)) + 1.0);
+            double q3 = Math.Cos(aGeo.Latitude + bGeo.Latitude);
+            double q1q2 = (1.0 + q1) * q2;
+            double q1q3 = (1.0 - q1) * q3;
+            double d2 = (q1q2 - q1q3) / 2;
+            return (int)(Geographical.EarthSphereRadius * Math.Acos(d2)) + 1;
         }
     }
 }

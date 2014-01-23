@@ -1,4 +1,4 @@
-﻿namespace TspLibNet.Problems
+﻿namespace TspLibNet
 {
     using System;
     using System.Collections.Generic;
@@ -16,7 +16,7 @@
     /// <summary>
     /// Problem base class
     /// </summary>
-    public abstract class ProblemBase
+    public abstract class ProblemBase : IProblem
     {
         public ProblemBase(string name, string comment, INodeProvider nodeProvider, IEdgeProvider edgeProvider, IEdgeWeightsProvider edgeWeightsProvider, IFixedEdgesProvider fixedEdgesProvider)
         {
@@ -78,26 +78,7 @@
         /// Gets file comment - additional comments from problem author
         /// </summary>
         public string Comment { get; protected set; }
-
-        /// <summary>
-        /// Validate given solution
-        /// </summary>
-        /// <param name="tour">Tour to check</param>
-        /// <returns>Whether tour is valid</returns>
-        public bool ValidateTour(ITour tour)
-        {
-            string[] errors;
-            return this.ValidateTour(tour, out errors);
-        }
-
-        /// <summary>
-        /// Validate given solution
-        /// </summary>
-        /// <param name="tour">Tour to check</param>
-        /// <param name="errors">utputs list of errors found in tour</param>
-        /// <returns>Whether tour is valid</returns>
-        public abstract bool ValidateTour(ITour tour, out string[] errors);
-
+        
         /// <summary>
         /// Gets tour distance for a given problem
         /// </summary>

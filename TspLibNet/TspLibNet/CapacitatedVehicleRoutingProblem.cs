@@ -1,4 +1,4 @@
-﻿namespace TspLibNet.Problems
+﻿namespace TspLibNet
 {
     using System;
     using System.Collections.Generic;
@@ -63,24 +63,23 @@
         /// Gets demand provider
         /// </summary>
         public IDemandProvider DemandProvider { get; protected set; }
-
-        /// <summary>
-        /// Validate given solution
-        /// </summary>
-        /// <param name="tour">Tour to check</param>
-        /// <param name="errors">utputs list of errors found in tour</param>
-        /// <returns>Whether tour is valid</returns>
-        public override bool ValidateTour(ITour tour, out string[] errors)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         /// <summary>
         /// Gets tour distance for a given problem
         /// </summary>
         /// <param name="tour">Tour to check</param>
         /// <returns>Tour distance</returns>
         public override double TourDistance(ITour tour)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Validate given solution
+        /// </summary>
+        /// <param name="tour">Tour to check</param>
+        /// <param name="errors">utputs list of errors found in tour</param>
+        protected void ValidateTour(ITour tour)
         {
             throw new NotImplementedException();
         }

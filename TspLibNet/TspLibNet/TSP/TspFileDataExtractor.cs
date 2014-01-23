@@ -257,7 +257,7 @@
         /// Loads weight matrix from tsp data
         /// </summary>
         /// <returns>Edge weight matrix</returns>
-        public double[,] LoadWeightMatrix()
+        protected double[,] LoadWeightMatrix()
         {
             MatrixBuilder matrixBuilder = new MatrixBuilder();
             switch (tspFile.EdgeWeightFormat)
@@ -330,6 +330,6 @@
             }
 
             return 0;
-        }
+        }       
     }
 }

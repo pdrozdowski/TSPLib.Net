@@ -22,7 +22,7 @@
         {
             double xd = a.X - b.X;
             double yd = a.Y - b.Y;
-            return MathExtensions.NearestInt(xd * xd + yd * yd);
+            return MathExtensions.NearestInt(Math.Sqrt(xd * xd + yd * yd));
         }
 
         /// <summary>
@@ -36,7 +36,7 @@
             double xd = a.X - b.X;
             double yd = a.Y - b.Y;
             double zd = a.Z - b.Z;
-            return MathExtensions.NearestInt(xd * xd + yd * yd + zd * zd);
+            return MathExtensions.NearestInt(Math.Sqrt(xd * xd + yd * yd + zd * zd));
         }
     }
 }

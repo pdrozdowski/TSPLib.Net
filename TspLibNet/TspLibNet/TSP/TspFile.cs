@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using TspLibNet.TSP.Defines;
+    using System.IO;
 
     /// <summary>
     /// Represents TSP file
@@ -100,5 +101,23 @@
         /// Matrix of edge weights
         /// </summary>
         public List<double> EdgeWeights;
+
+        /// <summary>
+        /// Loads TSP file
+        /// </summary>
+        /// <param name="fileName">file to load</param>
+        /// <returns>Loaed tsp file</returns>
+        public static TspFile Load(string fileName)
+        {
+            TspFile result = null;
+            TspFileLoader loader = new TspFileLoader();
+            using (StreamReader reader = new StreamReader(fileName))
+            {
+                result = loader.Load(reader);
+                reader.Close();
+            }
+
+            return result;
+        }
     }
 }
