@@ -37,7 +37,12 @@ namespace TspLibNet
     using TspLibNet.Exceptions;
 
     /// <summary>
-    /// Symmetric Traveling Salesman Problem
+    /// Traveling Salesman Problem
+    /// This class servers for synchronous and asynchronous Traveling Salesman Problem.
+    /// The problem is to visit all the nodes of the graph with a shortes posible tour.
+    /// In synchronous variant edges weights are invariant of a move direction, in asynchronous they can have different
+    /// weights whether going from A to B or from B to A... usualy then weights are provided in form of a weights matrix.
+    /// For synchronous problem weights are commonly made by the one of distance functions.
     /// </summary>
     public class TravelingSalesmanProblem : ProblemBase
     {
