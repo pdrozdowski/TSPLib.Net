@@ -45,6 +45,11 @@ namespace TspLibNet
         {
         }
 
+        public static SequentialOrderingProblem FromFile(string fileName)
+        {
+            return FromTspFile(TspFile.Load(fileName));
+        }
+
         public static SequentialOrderingProblem FromTspFile(TspFile tspFile)
         {
             if (tspFile.Type != TSP.Defines.FileType.SOP)

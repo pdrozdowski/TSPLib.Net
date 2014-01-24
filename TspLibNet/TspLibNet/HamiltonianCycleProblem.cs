@@ -45,6 +45,11 @@ namespace TspLibNet
         {
         }
 
+        public static HamiltonianCycleProblem FromFile(string fileName)
+        {
+            return FromTspFile(TspFile.Load(fileName));
+        }
+
         public static HamiltonianCycleProblem FromTspFile(TspFile tspFile)
         {
             if (tspFile.Type != TSP.Defines.FileType.HCP)

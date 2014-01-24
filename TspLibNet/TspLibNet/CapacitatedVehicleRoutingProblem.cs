@@ -57,6 +57,11 @@ namespace TspLibNet
             this.DemandProvider = demandProvider;
         }
 
+        public static CapacitatedVehicleRoutingProblem FromFile(string fileName)
+        {
+            return FromTspFile(TspFile.Load(fileName));
+        }
+
         public static CapacitatedVehicleRoutingProblem FromTspFile(TspFile tspFile)
         {
             if (tspFile.Type != TSP.Defines.FileType.CVRP)

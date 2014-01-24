@@ -46,6 +46,11 @@ namespace TspLibNet
         {
         }
 
+        public static TravelingSalesmanProblem FromFile(string fileName)
+        {
+            return FromTspFile(TspFile.Load(fileName));
+        }
+
         public static TravelingSalesmanProblem FromTspFile(TspFile tspFile)
         {
             if (tspFile.Type != TSP.Defines.FileType.TSP && tspFile.Type != TSP.Defines.FileType.ATSP)
@@ -86,7 +91,7 @@ namespace TspLibNet
         /// Validate given solution
         /// </summary>
         /// <param name="tour">Tour to check</param>
-        /// <param name="errors">utputs list of errors found in tour</param>
+        /// <param name="errors">outputs list of errors found in tour</param>
         protected void ValidateTour(ITour tour)
         {
             if (tour == null)
