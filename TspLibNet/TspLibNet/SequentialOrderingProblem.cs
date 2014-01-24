@@ -40,11 +40,35 @@ namespace TspLibNet
     /// </summary>
     public class SequentialOrderingProblem : ProblemBase
     {
+        /// <summary>
+        /// Creates new instance of SequentialOrderingProblem class
+        /// </summary>
+        /// <param name="name">problem name</param>
+        /// <param name="comment">comment on problem from the author</param>
+        /// <param name="nodeProvider">provider of nodes</param>
+        /// <param name="edgeProvider">provider of edges</param>
+        /// <param name="edgeWeightsProvider">provider of edge weights</param>
+        /// <param name="fixedEdgesProvider">provider of fixed edges</param>
         public SequentialOrderingProblem(string name, string comment, INodeProvider nodeProvider, IEdgeProvider edgeProvider, IEdgeWeightsProvider edgeWeightsProvider, IFixedEdgesProvider fixedEdgesProvider)
             : base(name, comment, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider)
         {
         }
 
+        /// <summary>
+        /// Load problem from TSP file
+        /// </summary>
+        /// <param name="fileName">name of the file</param>
+        /// <returns>Loaded problem</returns>
+        public static SequentialOrderingProblem FromFile(string fileName)
+        {
+            return FromTspFile(TspFile.Load(fileName));
+        }
+
+        /// <summary>
+        /// Load problem from TSP file
+        /// </summary>
+        /// <param name="tspFile">TSP file instance</param>
+        /// <returns>Loaded problem</returns>
         public static SequentialOrderingProblem FromTspFile(TspFile tspFile)
         {
             if (tspFile.Type != TSP.Defines.FileType.SOP)

@@ -212,18 +212,18 @@ namespace TspLibNetTests
         [TestMethod]
         public void CheckOptTourDistancesOnHCP()
         {
-            // TODO: find the distance of opt tours for HCP
-            AssertTourDistance(FileType.HCP, "hcp/alb1000.hcp", "hcp/alb1000.opt.tour", 1000000000);
-            AssertTourDistance(FileType.HCP, "hcp/alb2000.hcp", "hcp/alb2000.opt.tour", 1000000000);
-            AssertTourDistance(FileType.HCP, "hcp/alb3000a.hcp", "hcp/alb3000a.opt.tour", 1000000000);
-            AssertTourDistance(FileType.HCP, "hcp/alb3000b.hcp", "hcp/alb3000b.opt.tour", 1000000000);
-            AssertTourDistance(FileType.HCP, "hcp/alb3000c.hcp", "hcp/alb3000c.opt.tour", 1000000000);
-            AssertTourDistance(FileType.HCP, "hcp/alb3000d.hcp", "hcp/alb3000d.opt.tour", 1000000000);
-            AssertTourDistance(FileType.HCP, "hcp/alb3000e.hcp", "hcp/alb3000e.opt.tour", 1000000000);
-            AssertTourDistance(FileType.HCP, "hcp/alb4000.hcp", "hcp/alb4000.opt.tour", 1000000000);
-            AssertTourDistance(FileType.HCP, "hcp/alb5000.hcp", "hcp/alb5000.opt.tour", 1000000000);
-            // TODO: no opt tours for SOP, VRP, ATSP with known distance for validation
+            AssertHCPTourDistance(FileType.HCP, "hcp/alb1000.hcp", "hcp/alb1000.opt.tour");
+            AssertHCPTourDistance(FileType.HCP, "hcp/alb2000.hcp", "hcp/alb2000.opt.tour");
+            AssertHCPTourDistance(FileType.HCP, "hcp/alb3000a.hcp", "hcp/alb3000a.opt.tour");
+            AssertHCPTourDistance(FileType.HCP, "hcp/alb3000b.hcp", "hcp/alb3000b.opt.tour");
+            AssertHCPTourDistance(FileType.HCP, "hcp/alb3000c.hcp", "hcp/alb3000c.opt.tour");
+            AssertHCPTourDistance(FileType.HCP, "hcp/alb3000d.hcp", "hcp/alb3000d.opt.tour");
+            AssertHCPTourDistance(FileType.HCP, "hcp/alb3000e.hcp", "hcp/alb3000e.opt.tour");
+            AssertHCPTourDistance(FileType.HCP, "hcp/alb4000.hcp", "hcp/alb4000.opt.tour");
+            AssertHCPTourDistance(FileType.HCP, "hcp/alb5000.hcp", "hcp/alb5000.opt.tour");            
         }
+
+        // TODO: no opt tours for SOP, VRP, ATSP with known distance for validation
 
         private void AssertTourDistance(FileType problemType, string problemFileName, string tourFileName, int expectedDistance)
         {
@@ -243,9 +243,6 @@ namespace TspLibNetTests
                 case FileType.CVRP:
                     problem = CapacitatedVehicleRoutingProblem.FromTspFile(problemTspFile);
                     break;
-                case FileType.HCP:
-                    problem = HamiltonianCycleProblem.FromTspFile(problemTspFile);
-                    break;
                 case FileType.SOP:
                     problem = SequentialOrderingProblem.FromTspFile(problemTspFile);
                     break;
@@ -257,6 +254,24 @@ namespace TspLibNetTests
 
             Assert.IsNotNull(tour);
             Assert.AreEqual(expectedDistance, problem.TourDistance(tour));
+        }
+
+        private void AssertHCPTourDistance(FileType problemType, string problemFileName, string tourFileName)
+        {
+            TspFile problemTspFile = TspFile.Load(Path.Combine(rootDir, problemFileName));
+            TspFile tourTspFile = TspFile.Load(Path.Combine(rootDir, tourFileName));
+
+            Assert.IsNotNull(problemTspFile);
+            Assert.IsNotNull(tourTspFile);
+
+            HamiltonianCycleProblem problem = HamiltonianCycleProblem.FromTspFile(problemTspFile);
+
+            Assert.IsNotNull(problem);
+
+            ITour tour = Tour.FromTspFile(tourTspFile);
+
+            Assert.IsNotNull(tour);
+            Assert.AreEqual(problem.OptimalTourDistance, problem.TourDistance(tour));
         }
     }
 }
