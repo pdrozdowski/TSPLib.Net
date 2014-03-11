@@ -39,6 +39,15 @@ namespace TspLibNet
     /// </summary>
     public abstract class ProblemBase : IProblem
     {
+        /// <summary>
+        /// Creates new instance of ProblemBase class
+        /// </summary>
+        /// <param name="name">Problem name</param>
+        /// <param name="comment">Comment on problem</param>
+        /// <param name="nodeProvider">Provider of graph nodes</param>
+        /// <param name="edgeProvider">Provider of graph edges</param>
+        /// <param name="edgeWeightsProvider">Provider of edge weights</param>
+        /// <param name="fixedEdgesProvider">Provider of solution fixed edges</param>
         public ProblemBase(string name, string comment, INodeProvider nodeProvider, IEdgeProvider edgeProvider, IEdgeWeightsProvider edgeWeightsProvider, IFixedEdgesProvider fixedEdgesProvider)
         {
             if (nodeProvider == null)

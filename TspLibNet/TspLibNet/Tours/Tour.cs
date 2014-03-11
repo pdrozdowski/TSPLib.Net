@@ -95,5 +95,15 @@ namespace TspLibNet.Tours
 
             return new Tour(tspFile.Name, tspFile.Comment, tspFile.Dimension, tspFile.Tour);
         }
+
+        /// <summary>
+        /// Load tour from TSP file
+        /// </summary>
+        /// <param name="fileName">name of the file</param>
+        /// <returns>Loaded tour</returns>
+        public static Tour FromFile(string fileName)
+        {
+            return FromTspFile(TspFile.Load(fileName));
+        }
     }
 }

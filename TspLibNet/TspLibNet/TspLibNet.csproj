@@ -68,6 +68,8 @@
     <Compile Include="Graph\Nodes\DimensionBasedNodeProvider.cs" />
     <Compile Include="Graph\Nodes\NodeListBasedNodeProvider.cs" />
     <Compile Include="IProblem.cs" />
+    <Compile Include="TspLib95.cs" />
+    <Compile Include="TspLib95Item.cs" />
     <Compile Include="TSP\TspFileDataExtractor.cs" />
     <Compile Include="Graph\EdgeWeights\NodeAdjacencyBasedWeightProvider.cs" />
     <Compile Include="Graph\Edges\EdgesCollection.cs" />
