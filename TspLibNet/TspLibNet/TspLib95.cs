@@ -53,11 +53,18 @@ namespace TspLibNet
         /// </summary>
         public string RootPath { get; protected set; }
 
+        /// <summary>
+        /// Clear loaded library items
+        /// </summary>
         public void Clear()
         {
             this.Items.Clear();
         }
 
+        /// <summary>
+        /// Load all TSP LIB problem instances
+        /// </summary>
+        /// <returns></returns>
         public int LoadAll()
         {
             int counter = 0;
@@ -69,57 +76,112 @@ namespace TspLibNet
             return counter;
         }
 
+        /// <summary>
+        /// Load only TSP problems
+        /// </summary>
+        /// <returns>Number of problems loaded</returns>
         public int LoadTSP()
         {
             return this.LoadTSP("*");
         }
 
+        /// <summary>
+        /// Load only ATSP problems
+        /// </summary>
+        /// <returns>Number of problems loaded</returns>
         public int LoadATSP()
         {
             return this.LoadATSP("*");
         }
 
+        /// <summary>
+        /// Load only HCP problems
+        /// </summary>
+        /// <returns>Number of problems loaded</returns>
         public int LoadHCP()
         {
             return this.LoadHCP("*");
         }
 
+        /// <summary>
+        /// Load only SOP problems
+        /// </summary>
+        /// <returns>Number of problems loaded</returns>
         public int LoadSOP()
         {            
             return this.LoadSOP("*");
         }
 
+        /// <summary>
+        /// Load only VRP problems
+        /// </summary>
+        /// <returns>Number of problems loaded</returns>
         public int LoadVRP()
         {
             return this.LoadVRP("*");
         }
 
+        /// <summary>
+        /// Load TSP problem with a given name
+        /// </summary>
+        /// <param name="name">Problem name</param>
+        /// <returns>Number of problems loaded</returns>
         public int LoadTSP(string name)
         {
             return this.ProblemLoader(name, "TravelingSalesmanProblem", ".tsp", "TSP", "bestSolutions.txt", ".opt.tour");
         }
 
+        /// <summary>
+        /// Load ATSP problem with a given name
+        /// </summary>
+        /// <param name="name">Problem name</param>
+        /// <returns>Number of problems loaded</returns>
         public int LoadATSP(string name)
         {
             return this.ProblemLoader(name, "TravelingSalesmanProblem",  ".atsp", "ATSP", "bestSolutions.txt", ".opt.tour");
         }
 
+        /// <summary>
+        /// Load HCP problem with a given name
+        /// </summary>
+        /// <param name="name">Problem name</param>
+        /// <returns>Number of problems loaded</returns>
         public int LoadHCP(string name)
         {
             return this.ProblemLoader(name, "HamiltonianCycleProblem", ".hcp", "HCP", "bestSolutions.txt", ".opt.tour");
         }
 
+        /// <summary>
+        /// Load SOP problem with a given name
+        /// </summary>
+        /// <param name="name">Problem name</param>
+        /// <returns>Number of problems loaded</returns>
         public int LoadSOP(string name)
         {
             // do not load best solution, lack of support at the moment
             return this.ProblemLoader(name, "SequentialOrderingProblem", ".sop", "SOP", "????.txt", ".opt.tour");
         }
 
+        /// <summary>
+        /// Load VRP problem with a given name
+        /// </summary>
+        /// <param name="name">Problem name</param>
+        /// <returns>Number of problems loaded</returns>
         public int LoadVRP(string name)
         {
             return this.ProblemLoader(name, "CapacitatedVehicleRoutingProblem", ".vrp", "VRP", "bestSolutions.txt", ".opt.tour");
         }
 
+        /// <summary>
+        /// Generic problem loading routine
+        /// </summary>
+        /// <param name="name">problem name</param>
+        /// <param name="type">problem class type</param>
+        /// <param name="extension">problem file extension</param>
+        /// <param name="dir">directory with problems of such type</param>
+        /// <param name="solutionsFile">name of file with opt distances</param>
+        /// <param name="optTourExtension">extension for files with opt tours</param>
+        /// <returns>Number of problems loaded</returns>
         protected int ProblemLoader(string name, string type, string extension, string dir, string solutionsFile, string optTourExtension)
         {
             if (string.IsNullOrEmpty(name))
@@ -152,6 +214,12 @@ namespace TspLibNet
             return counter;
         }
 
+        /// <summary>
+        /// Creates instance of a specific TSP problem
+        /// </summary>
+        /// <param name="filename">name of file with problem</param>
+        /// <param name="type">type of problem class</param>
+        /// <returns>Problem loaded from the file</returns>
         protected IProblem FactorizeProblem(string filename, string type)
         {
             switch (type)
@@ -169,6 +237,11 @@ namespace TspLibNet
             throw new ArgumentOutOfRangeException("type");
         }
 
+        /// <summary>
+        /// Loads optimal tour file
+        /// </summary>
+        /// <param name="filename">Name of file with optimal tour</param>
+        /// <returns>Loaded optimal tour</returns>
         protected Dictionary<string, double> LoadBestSolutionsFile(string filename)
         {
             Dictionary<string, double> results = new Dictionary<string,double>();

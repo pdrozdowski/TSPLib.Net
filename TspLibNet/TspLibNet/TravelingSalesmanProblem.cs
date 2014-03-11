@@ -92,6 +92,25 @@ namespace TspLibNet
         }
 
         /// <summary>
+        /// Create problem from list of nodes
+        /// </summary>
+        /// <param name="nodes">list of nodes defining TSP problem instance</param>
+        /// <returns>Generated TSP problem</returns>
+        public static TravelingSalesmanProblem FromNodes(List<INode> nodes)
+        {
+            if (nodes == null)
+            {
+                throw new ArgumentNullException("nodes");
+            }
+
+            var nodeProvider = new NodeListBasedNodeProvider(nodes);
+            var edgeProvider = new NodeBasedEdgeProvider(nodes);
+            var edgeWeightsProvider = new FunctionBasedWeightProviderWithCaching(new DistanceFunctions.Euclidean());
+            var fixedEdgesProvider = new EdgeListBasedFixedEdgesProvider(new EdgesCollection());
+            return new TravelingSalesmanProblem(nodes.Count + " city TSP problem", "Generated", nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider);
+        }       
+
+        /// <summary>
         /// Gets tour distance for a given problem
         /// </summary>
         /// <param name="tour">Tour to check</param>
