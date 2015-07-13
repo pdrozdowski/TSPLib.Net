@@ -20,15 +20,17 @@
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+using TspLibNet.TSP.Defines;
+
 namespace TspLibNet
 {
+    using Graph.Edges;
+    using Graph.EdgeWeights;
+    using Graph.FixedEdges;
+    using Graph.Nodes;
     using System;
-    using TspLibNet.Graph.Edges;
-    using TspLibNet.Graph.EdgeWeights;
-    using TspLibNet.Graph.FixedEdges;
-    using TspLibNet.Graph.Nodes;
-    using TspLibNet.Tours;
-    using TspLibNet.TSP;
+    using Tours;
+    using TSP;
 
     /// <summary>
     /// Sequential Ordering Problem
@@ -44,8 +46,13 @@ namespace TspLibNet
         /// <param name="edgeProvider">provider of edges</param>
         /// <param name="edgeWeightsProvider">provider of edge weights</param>
         /// <param name="fixedEdgesProvider">provider of fixed edges</param>
-        public SequentialOrderingProblem(string name, string comment, INodeProvider nodeProvider, IEdgeProvider edgeProvider, IEdgeWeightsProvider edgeWeightsProvider, IFixedEdgesProvider fixedEdgesProvider)
-            : base(name, comment, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider)
+        public SequentialOrderingProblem(string name,
+                                         string comment,
+                                         INodeProvider nodeProvider,
+                                         IEdgeProvider edgeProvider,
+                                         IEdgeWeightsProvider edgeWeightsProvider,
+                                         IFixedEdgesProvider fixedEdgesProvider)
+            : base(name, comment, ProblemType.SOP, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider)
         {
         }
 
@@ -66,7 +73,7 @@ namespace TspLibNet
         /// <returns>Loaded problem</returns>
         public static SequentialOrderingProblem FromTspFile(TspFile tspFile)
         {
-            if (tspFile.Type != TSP.Defines.FileType.SOP)
+            if (tspFile.Type != FileType.SOP)
             {
                 throw new ArgumentOutOfRangeException("tspFile");
             }
@@ -100,7 +107,6 @@ namespace TspLibNet
         /// Validate given solution
         /// </summary>
         /// <param name="tour">Tour to check</param>
-        /// <param name="errors">utputs list of errors found in tour</param>
         protected void ValidateTour(ITour tour)
         {
             throw new NotImplementedException();

@@ -1,17 +1,17 @@
 ﻿/* The MIT License (MIT)
 *
 * Copyright (c) 2014 Pawel Drozdowski
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy of
 * this software and associated documentation files (the "Software"), to deal in
 * the Software without restriction, including without limitation the rights to
 * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 * the Software, and to permit persons to whom the Software is furnished to do so,
 * subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
 * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
@@ -19,24 +19,27 @@
 * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
+using TspLibNet.TSP.Defines;
+
 namespace TspLibNet
 {
+    using Exceptions;
+    using Graph.Edges;
+    using Graph.EdgeWeights;
+    using Graph.FixedEdges;
+    using Graph.Nodes;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using TspLibNet.Tours;
-    using TspLibNet.Graph.Nodes;
-    using TspLibNet.Graph.Edges;
-    using TspLibNet.Graph.EdgeWeights;
-    using TspLibNet.Graph.FixedEdges;
-    using TspLibNet.TSP;
-    using TspLibNet.Exceptions;
+    using Tours;
+    using TSP;
 
     /// <summary>
     /// Hamiltonian Cycle Problem
     /// This problem purpose is to find out if there is a Hamiltonian path in a graph.
-    /// To do so we have eges with weight of one on all adjacent graph nodes and rest of edges have weight greater than one.
-    /// Hamiltionan path on existing edges will exist if the minimal tour distance will be made only from edges with weight of one...
+    /// To do so we have edges with weight of one on all adjacent graph nodes and rest of edges have weight greater than one.
+    /// Hamiltonian path on existing edges will exist if the minimal tour distance will be made only from edges with weight of one...
     /// so the total distance of the tour will be number of nodes.
     /// </summary>
     public class HamiltonianCycleProblem : ProblemBase
@@ -50,8 +53,13 @@ namespace TspLibNet
         /// <param name="edgeProvider">provider of edges</param>
         /// <param name="edgeWeightsProvider">provider of edge weights</param>
         /// <param name="fixedEdgesProvider">provider of fixed edges</param>
-        public HamiltonianCycleProblem(string name, string comment, INodeProvider nodeProvider, IEdgeProvider edgeProvider, IEdgeWeightsProvider edgeWeightsProvider, IFixedEdgesProvider fixedEdgesProvider)
-            : base(name, comment, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider)
+        public HamiltonianCycleProblem(string name,
+            string comment,
+            INodeProvider nodeProvider,
+            IEdgeProvider edgeProvider,
+            IEdgeWeightsProvider edgeWeightsProvider,
+            IFixedEdgesProvider fixedEdgesProvider)
+            : base(name, comment, ProblemType.HCP, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider)
         {
         }
 
@@ -72,7 +80,7 @@ namespace TspLibNet
         /// <returns>Loaded problem</returns>
         public static HamiltonianCycleProblem FromTspFile(TspFile tspFile)
         {
-            if (tspFile.Type != TSP.Defines.FileType.HCP)
+            if (tspFile.Type != FileType.HCP)
             {
                 throw new ArgumentOutOfRangeException("tspFile");
             }
@@ -93,7 +101,7 @@ namespace TspLibNet
         {
             get
             {
-                return this.NodeProvider.CountNodes();
+                return NodeProvider.CountNodes();
             }
         }
 
@@ -104,13 +112,13 @@ namespace TspLibNet
         /// <returns>Tour distance</returns>
         public override double TourDistance(ITour tour)
         {
-            this.ValidateTour(tour);
+            ValidateTour(tour);
             double distance = 0;
             for (int i = -1; i + 1 < tour.Nodes.Count; i++)
             {
-                INode first = i == -1 ? this.NodeProvider.GetNode(tour.Nodes.Last()) : this.NodeProvider.GetNode(tour.Nodes[i]);
-                INode second = this.NodeProvider.GetNode(tour.Nodes[i + 1]);
-                double weight = this.EdgeWeightsProvider.GetWeight(first, second);
+                INode first = i == -1 ? NodeProvider.GetNode(tour.Nodes.Last()) : NodeProvider.GetNode(tour.Nodes[i]);
+                INode second = NodeProvider.GetNode(tour.Nodes[i + 1]);
+                double weight = EdgeWeightsProvider.GetWeight(first, second);
                 distance += weight;
             }
 
@@ -121,7 +129,6 @@ namespace TspLibNet
         /// Validate given solution
         /// </summary>
         /// <param name="tour">Tour to check</param>
-        /// <param name="errors">outputs list of errors found in tour</param>
         protected void ValidateTour(ITour tour)
         {
             if (tour == null)
@@ -142,7 +149,7 @@ namespace TspLibNet
                     throw new TourInvalidException("Tour is invalid, has a node " + nodeId + " multiple times");
                 }
 
-                if (null == this.NodeProvider.GetNode(nodeId))
+                if (null == NodeProvider.GetNode(nodeId))
                 {
                     throw new TourInvalidException("Tour is invalid, has a node " + nodeId + " which is not present in a problem");
                 }
