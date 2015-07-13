@@ -1,17 +1,17 @@
 ﻿/* The MIT License (MIT)
 *
 * Copyright (c) 2014 Pawel Drozdowski
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy of
 * this software and associated documentation files (the "Software"), to deal in
 * the Software without restriction, including without limitation the rights to
 * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 * the Software, and to permit persons to whom the Software is furnished to do so,
 * subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
 * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
@@ -19,157 +19,209 @@
 * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
+using System.Linq;
+
 namespace TspLibNet
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.IO;
-    using TspLibNet.Tours;
+    using Tours;
 
     /// <summary>
     /// Main class providing access to all TSP library resources.
     /// </summary>
     public class TspLib95
     {
+        // The path to the TSPLIB95 data library.
+        private readonly string _tspLib95Path;
+
         /// <summary>
-        /// Creates new instance of TspLib95 class.
+        /// Gets ALL TSPLIB95 items.
         /// </summary>
-        /// <param name="rootPath">library root path</param>
-        public TspLib95(string rootPath)
+        public List<TspLib95Item> Items { get; private set; }
+
+        /// <summary>
+        /// Gets all TSP items.
+        /// </summary>
+        public IEnumerable<TspLib95Item> TSPItems()
         {
-            if (string.IsNullOrEmpty(rootPath))
+            return Items.Where(i => i.Problem.Type == ProblemType.TSP);
+        }
+
+        /// <summary>
+        /// Gets all ATSP items.
+        /// </summary>
+        public IEnumerable<TspLib95Item> ATSPItems()
+        {
+            return Items.Where(i => i.Problem.Type == ProblemType.ATSP);
+        }
+
+        /// <summary>
+        /// Gets all HCP items.
+        /// </summary>
+        public IEnumerable<TspLib95Item> HCPItems()
+        {
+            return Items.Where(i => i.Problem.Type == ProblemType.HCP);
+        }
+
+        /// <summary>
+        /// Gets all SOP items.
+        /// </summary>
+        public IEnumerable<TspLib95Item> SOPItems()
+        {
+            return Items.Where(i => i.Problem.Type == ProblemType.SOP);
+        }
+
+        /// <summary>
+        /// Gets all CVRP items.
+        /// </summary>
+        public IEnumerable<TspLib95Item> CVRPItems()
+        {
+            return Items.Where(i => i.Problem.Type == ProblemType.CVRP);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>The relevant TspLib95Item associated with "name" or a default item if not found</returns>
+        public TspLib95Item GetItemByName(string name)
+        {
+            return Items.Select(i => i).FirstOrDefault(i => i.Problem.Name == name);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the TspLib95 class.
+        /// </summary>
+        /// <param name="tspLib95Path">TSPLIB95 data library root path</param>
+        public TspLib95(string tspLib95Path)
+        {
+            if (string.IsNullOrWhiteSpace(tspLib95Path))
             {
-                throw new ArgumentNullException("rootPath");
+                throw new ArgumentNullException("tspLib95Path");
             }
 
-            this.RootPath = rootPath;
-            this.Items = new List<TspLib95Item>();
+            _tspLib95Path = tspLib95Path;
+            Items = new List<TspLib95Item>();
         }
 
         /// <summary>
-        /// Gets or sets library root path
+        /// Clear ALL loaded library items.
         /// </summary>
-        public string RootPath { get; protected set; }
-
-        /// <summary>
-        /// Clear loaded library items
-        /// </summary>
-        public void Clear()
+        public void ClearAll()
         {
-            this.Items.Clear();
+            Items.Clear();
         }
 
         /// <summary>
-        /// Load all TSP LIB problem instances
+        /// Load ALL TSPLIB95 problem instances.
         /// </summary>
-        /// <returns></returns>
-        public int LoadAll()
+        /// <returns>A list of all TSPLIB95 problem items.</returns>
+        public IEnumerable<TspLib95Item> LoadAll()
         {
-            int counter = 0;
-            counter += this.LoadTSP();
-            counter += this.LoadATSP();
-            counter += this.LoadHCP();
-            counter += this.LoadSOP();
-            counter += this.LoadVRP();
-            return counter;
+            Items.AddRange(LoadAllTSP());
+            Items.AddRange(LoadAllATSP());
+            Items.AddRange(LoadAllHCP());
+            Items.AddRange(LoadAllSOP());
+            Items.AddRange(LoadAllCVRP());
+            return Items;
         }
 
         /// <summary>
         /// Load only TSP problems
         /// </summary>
-        /// <returns>Number of problems loaded</returns>
-        public int LoadTSP()
+        /// <returns>A list of all TSP lib problem items.</returns>
+        public IEnumerable<TspLib95Item> LoadAllTSP()
         {
-            return this.LoadTSP("*");
+            LoadTSP("*");
+            return TSPItems();
         }
 
         /// <summary>
         /// Load only ATSP problems
         /// </summary>
-        /// <returns>Number of problems loaded</returns>
-        public int LoadATSP()
+        /// <returns>A list of all ATSP lib problem items.</returns>
+        public IEnumerable<TspLib95Item> LoadAllATSP()
         {
-            return this.LoadATSP("*");
+            LoadATSP("*");
+            return ATSPItems();
         }
 
         /// <summary>
         /// Load only HCP problems
         /// </summary>
-        /// <returns>Number of problems loaded</returns>
-        public int LoadHCP()
+        /// <returns>A list of all HPC lib problem items.</returns>
+        public IEnumerable<TspLib95Item> LoadAllHCP()
         {
-            return this.LoadHCP("*");
+            LoadHCP("*");
+            return HCPItems();
         }
 
         /// <summary>
         /// Load only SOP problems
         /// </summary>
-        /// <returns>Number of problems loaded</returns>
-        public int LoadSOP()
-        {            
-            return this.LoadSOP("*");
+        /// <returns>A list of all SOP lib problem items.</returns>
+        public IEnumerable<TspLib95Item> LoadAllSOP()
+        {
+            LoadSOP("*");
+            return SOPItems();
         }
 
         /// <summary>
         /// Load only VRP problems
         /// </summary>
-        /// <returns>Number of problems loaded</returns>
-        public int LoadVRP()
+        /// <returns>A list of all CVRP lib problem items.</returns>
+        public IEnumerable<TspLib95Item> LoadAllCVRP()
         {
-            return this.LoadVRP("*");
+            LoadCVRP("*");
+            return CVRPItems();
         }
 
         /// <summary>
         /// Load TSP problem with a given name
         /// </summary>
         /// <param name="name">Problem name</param>
-        /// <returns>Number of problems loaded</returns>
-        public int LoadTSP(string name)
+        public void LoadTSP(string name)
         {
-            return this.ProblemLoader(name, "TravelingSalesmanProblem", ".tsp", "TSP", "bestSolutions.txt", ".opt.tour");
+            ProblemLoader(name, "TravelingSalesmanProblem", ".tsp", "TSP", "bestSolutions.txt", ".opt.tour");
         }
 
         /// <summary>
         /// Load ATSP problem with a given name
         /// </summary>
         /// <param name="name">Problem name</param>
-        /// <returns>Number of problems loaded</returns>
-        public int LoadATSP(string name)
+        public void LoadATSP(string name)
         {
-            return this.ProblemLoader(name, "TravelingSalesmanProblem",  ".atsp", "ATSP", "bestSolutions.txt", ".opt.tour");
+            ProblemLoader(name, "TravelingSalesmanProblem", ".atsp", "ATSP", "bestSolutions.txt", ".opt.tour");
         }
 
         /// <summary>
         /// Load HCP problem with a given name
         /// </summary>
         /// <param name="name">Problem name</param>
-        /// <returns>Number of problems loaded</returns>
-        public int LoadHCP(string name)
+        public void LoadHCP(string name)
         {
-            return this.ProblemLoader(name, "HamiltonianCycleProblem", ".hcp", "HCP", "bestSolutions.txt", ".opt.tour");
+            ProblemLoader(name, "HamiltonianCycleProblem", ".hcp", "HCP", "bestSolutions.txt", ".opt.tour");
         }
 
         /// <summary>
         /// Load SOP problem with a given name
         /// </summary>
         /// <param name="name">Problem name</param>
-        /// <returns>Number of problems loaded</returns>
-        public int LoadSOP(string name)
+        public void LoadSOP(string name)
         {
             // do not load best solution, lack of support at the moment
-            return this.ProblemLoader(name, "SequentialOrderingProblem", ".sop", "SOP", "????.txt", ".opt.tour");
+            ProblemLoader(name, "SequentialOrderingProblem", ".sop", "SOP", "????.txt", ".opt.tour");
         }
 
         /// <summary>
         /// Load VRP problem with a given name
         /// </summary>
         /// <param name="name">Problem name</param>
-        /// <returns>Number of problems loaded</returns>
-        public int LoadVRP(string name)
+        public void LoadCVRP(string name)
         {
-            return this.ProblemLoader(name, "CapacitatedVehicleRoutingProblem", ".vrp", "VRP", "bestSolutions.txt", ".opt.tour");
+            ProblemLoader(name, "CapacitatedVehicleRoutingProblem", ".vrp", "VRP", "bestSolutions.txt", ".opt.tour");
         }
 
         /// <summary>
@@ -181,37 +233,39 @@ namespace TspLibNet
         /// <param name="dir">directory with problems of such type</param>
         /// <param name="solutionsFile">name of file with opt distances</param>
         /// <param name="optTourExtension">extension for files with opt tours</param>
-        /// <returns>Number of problems loaded</returns>
-        protected int ProblemLoader(string name, string type, string extension, string dir, string solutionsFile, string optTourExtension)
+        /// <returns>A list of the TspLib95Items loaded</returns>
+        private void ProblemLoader(string name,
+                                   string type,
+                                   string extension,
+                                   string dir,
+                                   string solutionsFile,
+                                   string optTourExtension)
         {
             if (string.IsNullOrEmpty(name))
             {
                 throw new ArgumentNullException("name");
             }
 
-            int counter = 0;
             name = name.Replace(extension, "");
-            string instancesDir = Path.Combine(this.RootPath, dir);
-            string instancePattern = name + extension;
-            Dictionary<string, double> solutions = this.LoadBestSolutionsFile(Path.Combine(instancesDir, solutionsFile));
-            foreach (string file in Directory.GetFiles(instancesDir, instancePattern))
+            var instancesDir = Path.Combine(_tspLib95Path, dir);
+            var instancePattern = name + extension;
+            var solutions = LoadBestSolutionsFile(Path.Combine(instancesDir, solutionsFile));
+
+            foreach (var file in Directory.GetFiles(instancesDir, instancePattern))
             {
-                IProblem problem = this.FactorizeProblem(file, type);
+                var problem = FactorizeProblem(file, type);
                 ITour tour = null;
-                string tourName = file.Replace(extension, optTourExtension);
+                var tourName = file.Replace(extension, optTourExtension);
                 if (File.Exists(tourName))
                 {
                     tour = Tour.FromFile(tourName);
                 }
 
-                double distance = double.MaxValue;
+                var distance = double.MaxValue;
                 if (solutions.ContainsKey(problem.Name))
                     distance = solutions[problem.Name];
-                this.Items.Add(new TspLib95Item(problem, tour, distance));
-                counter++;
+                Items.Add(new TspLib95Item(problem, tour, distance));
             }
-
-            return counter;
         }
 
         /// <summary>
@@ -220,16 +274,19 @@ namespace TspLibNet
         /// <param name="filename">name of file with problem</param>
         /// <param name="type">type of problem class</param>
         /// <returns>Problem loaded from the file</returns>
-        protected IProblem FactorizeProblem(string filename, string type)
+        private static IProblem FactorizeProblem(string filename, string type)
         {
             switch (type)
             {
-                case "TravelingSalesmanProblem" :
+                case "TravelingSalesmanProblem":
                     return TravelingSalesmanProblem.FromFile(filename);
+
                 case "SequentialOrderingProblem":
                     return SequentialOrderingProblem.FromFile(filename);
+
                 case "CapacitatedVehicleRoutingProblem":
                     return CapacitatedVehicleRoutingProblem.FromFile(filename);
+
                 case "HamiltonianCycleProblem":
                     return HamiltonianCycleProblem.FromFile(filename);
             }
@@ -242,16 +299,16 @@ namespace TspLibNet
         /// </summary>
         /// <param name="filename">Name of file with optimal tour</param>
         /// <returns>Loaded optimal tour</returns>
-        protected Dictionary<string, double> LoadBestSolutionsFile(string filename)
+        private static Dictionary<string, double> LoadBestSolutionsFile(string filename)
         {
-            Dictionary<string, double> results = new Dictionary<string,double>();
+            var results = new Dictionary<string, double>();
             if (File.Exists(filename))
             {
-                foreach (string line in File.ReadAllLines(filename))
+                foreach (var line in File.ReadAllLines(filename))
                 {
-                    if (!string.IsNullOrEmpty(line))
+                    if (!string.IsNullOrWhiteSpace(line))
                     {
-                        string[] parts = line.Split(new char[] { ':', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        var parts = line.Split(new[] { ':', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                         results.Add(parts[0], double.Parse(parts[1]));
                     }
                 }
@@ -259,7 +316,5 @@ namespace TspLibNet
 
             return results;
         }
-
-        public List<TspLib95Item> Items { get; protected set; }
     }
 }
