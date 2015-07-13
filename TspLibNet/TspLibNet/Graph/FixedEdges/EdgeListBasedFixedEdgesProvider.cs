@@ -23,8 +23,6 @@ namespace TspLibNet.Graph.FixedEdges
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using TspLibNet.Graph.Edges;
 
     /// <summary>

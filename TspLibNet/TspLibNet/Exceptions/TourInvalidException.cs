@@ -22,9 +22,6 @@
 namespace TspLibNet.Exceptions
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     /// <summary>
     /// Exception thrown when tour is not valid

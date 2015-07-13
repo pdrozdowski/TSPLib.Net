@@ -1,17 +1,17 @@
 ﻿/* The MIT License (MIT)
 *
 * Copyright (c) 2014 Pawel Drozdowski
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy of
 * this software and associated documentation files (the "Software"), to deal in
 * the Software without restriction, including without limitation the rights to
 * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 * the Software, and to permit persons to whom the Software is furnished to do so,
 * subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
 * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
@@ -19,22 +19,19 @@
 * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
 namespace TspLibNet
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using TspLibNet.Graph;
-    using TspLibNet.Tours;
-    using TspLibNet.Graph.Nodes;
+    using TspLibNet.Exceptions;
     using TspLibNet.Graph.Edges;
     using TspLibNet.Graph.EdgeWeights;
     using TspLibNet.Graph.FixedEdges;
-    using TspLibNet.Graph.Depots;
-    using TspLibNet.Graph.Demand;
+    using TspLibNet.Graph.Nodes;
+    using TspLibNet.Tours;
     using TspLibNet.TSP;
-    using TspLibNet.Exceptions;
 
     /// <summary>
     /// Traveling Salesman Problem
@@ -108,7 +105,7 @@ namespace TspLibNet
             var edgeWeightsProvider = new FunctionBasedWeightProviderWithCaching(new DistanceFunctions.Euclidean());
             var fixedEdgesProvider = new EdgeListBasedFixedEdgesProvider(new EdgesCollection());
             return new TravelingSalesmanProblem(nodes.Count + " city TSP problem", "Generated", nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider);
-        }       
+        }
 
         /// <summary>
         /// Gets tour distance for a given problem
@@ -141,7 +138,7 @@ namespace TspLibNet
             {
                 throw new ArgumentNullException("tour");
             }
-            
+
             if (tour.Dimension != tour.Nodes.Count)
             {
                 throw new TourInvalidException("Tour dimension does not match number of nodes on a list");

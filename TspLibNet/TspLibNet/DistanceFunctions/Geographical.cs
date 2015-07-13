@@ -22,11 +22,7 @@
 namespace TspLibNet.DistanceFunctions
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using TspLibNet.Graph.Nodes;
-    using TspLibNet.Extensions;
 
     /// <summary>
     /// Geographical distance function

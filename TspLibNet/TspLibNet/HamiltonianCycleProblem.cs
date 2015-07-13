@@ -24,15 +24,11 @@ namespace TspLibNet
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using TspLibNet.Graph;
     using TspLibNet.Tours;
     using TspLibNet.Graph.Nodes;
     using TspLibNet.Graph.Edges;
     using TspLibNet.Graph.EdgeWeights;
     using TspLibNet.Graph.FixedEdges;
-    using TspLibNet.Graph.Depots;
-    using TspLibNet.Graph.Demand;
     using TspLibNet.TSP;
     using TspLibNet.Exceptions;
 

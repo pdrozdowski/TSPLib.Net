@@ -23,8 +23,6 @@ namespace TspLibNet.Graph.Nodes
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     /// <summary>
     /// Provides nodes by generating them accordingly to a problem dimension

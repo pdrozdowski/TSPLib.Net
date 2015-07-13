@@ -23,11 +23,7 @@ namespace TspLibNet.TSP
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using TspLibNet.TSP.Defines;
     using TspLibNet.DistanceFunctions;
-    using TspLibNet.Graph;
     using TspLibNet.Graph.Nodes;
     using TspLibNet.Graph.Edges;
     using TspLibNet.Graph.EdgeWeights;

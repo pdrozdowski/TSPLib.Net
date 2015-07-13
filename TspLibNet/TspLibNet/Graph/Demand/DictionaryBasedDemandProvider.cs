@@ -23,10 +23,7 @@ namespace TspLibNet.Graph.Demand
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using TspLibNet.Graph.Nodes;
-    using TspLibNet.Exceptions;
 
     /// <summary>
     /// Provides demand values basing on a provided lokup dictionary

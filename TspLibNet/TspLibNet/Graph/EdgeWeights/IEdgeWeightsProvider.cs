@@ -21,10 +21,6 @@
 */
 namespace TspLibNet.Graph.EdgeWeights
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using TspLibNet.Graph.Nodes;
 
     /// <summary>

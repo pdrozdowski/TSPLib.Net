@@ -23,8 +23,6 @@ namespace TspLibNet.Graph.Nodes
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     /// <summary>
     /// Provides nodes by extracting them directly from a list of graph nodes
