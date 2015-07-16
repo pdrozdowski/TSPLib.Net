@@ -1,6 +1,7 @@
 ﻿/* The MIT License (MIT)
 *
-* Copyright (c) 2014 Pawel Drozdowski
+* Original Work Copyright (c) 2014 Pawel Drozdowski
+* Modified Work Copyright (c) 2015 William Hallatt
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy of
 * this software and associated documentation files (the "Software"), to deal in
@@ -24,7 +25,7 @@ namespace TspLibNet
 {
     using System;
     using System.Text;
-    using TspLibNet.Tours;
+    using Tours;
 
     /// <summary>
     /// Class represents instance of a TSP lib containing problem and it's optimal solution if available
@@ -49,9 +50,9 @@ namespace TspLibNet
                 throw new ArgumentNullException("problem");
             }
 
-            this.Problem = problem;
-            this.OptimalTour = optimalTour;
-            this._optimalTourDistance = optimalTourDistance;
+            Problem = problem;
+            OptimalTour = optimalTour;
+            _optimalTourDistance = optimalTourDistance;
         }
 
         /// <summary>
@@ -71,13 +72,13 @@ namespace TspLibNet
         {
             get
             {
-                if (this._optimalTourDistance.Equals(double.MaxValue) &&
-                    this.OptimalTour != null)
+                if (_optimalTourDistance.Equals(double.MaxValue) &&
+                    OptimalTour != null)
                 {
-                    this._optimalTourDistance = this.Problem.TourDistance(this.OptimalTour);
+                    _optimalTourDistance = Problem.TourDistance(OptimalTour);
                 }
 
-                return this._optimalTourDistance;
+                return _optimalTourDistance;
             }
         }
 
@@ -87,22 +88,25 @@ namespace TspLibNet
         /// <returns>string representation of an instance</returns>
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();
-            builder.Append(this.Problem.GetType().ToString());
+            var builder = new StringBuilder();
+            builder.Append(Problem.GetType());
             builder.Append(" - ");
-            builder.Append(this.Problem.Name);
+            builder.Append(Problem.Name);
             builder.Append(" - ");
-            builder.Append(this.Problem.Comment);
+            builder.Append(Problem.Comment);
             builder.Append(" - ");
             builder.Append("OptimalTour: ");
-            if (this.OptimalTour != null)
-                builder.Append("Available");
-            else builder.Append("Not Available");
+            builder.Append(OptimalTour != null ? "Available" : "Not Available");
             builder.Append(" - ");
             builder.Append("OptimalTourDistance: ");
-            if (this.OptimalTourDistance != double.MaxValue)
-                builder.Append(this.OptimalTourDistance);
-            else builder.Append("Unknown");
+            if (!OptimalTourDistance.Equals(double.MaxValue))
+            {
+                builder.Append(OptimalTourDistance);
+            }
+            else
+            {
+                builder.Append("Unknown");
+            }
             return builder.ToString();
         }
     }
