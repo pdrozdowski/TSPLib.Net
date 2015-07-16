@@ -1,17 +1,18 @@
 ﻿/* The MIT License (MIT)
 *
-* Copyright (c) 2014 Pawel Drozdowski
-* 
+* Original Work Copyright (c) 2014 Pawel Drozdowski
+* Modified Work Copyright (c) 2015 William Hallatt
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy of
 * this software and associated documentation files (the "Software"), to deal in
 * the Software without restriction, including without limitation the rights to
 * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 * the Software, and to permit persons to whom the Software is furnished to do so,
 * subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
 * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
@@ -19,30 +20,28 @@
 * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using System;
-using System.Text;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.IO;
 using TspLibNet;
+using TspLibNet.Tours;
 using TspLibNet.TSP;
 using TspLibNet.TSP.Defines;
-using TspLibNet.Tours;
 
 namespace TspLibNetTests
 {
     [TestClass]
     public class TspFileLoaderTests
     {
-        const string rootDir = @"..\..\..\..\TSPLIB95";
+        private const string RootDir = @"..\..\..\..\TSPLIB95";
 
         [TestMethod]
         public void LoadBerlin52Problem()
         {
             TspFile tspFile;
-            TspFileLoader loader = new TspFileLoader();
-            using(StreamReader reader = new StreamReader(Samples.Berlin52_Problem))
+            var loader = new TspFileLoader();
+            using (var reader = new StreamReader(Samples.Berlin52_Problem))
             {
                 tspFile = loader.Load(reader);
                 reader.Close();
@@ -74,8 +73,8 @@ namespace TspLibNetTests
         public void LoadBerlin52Tour()
         {
             TspFile tspFile;
-            TspFileLoader loader = new TspFileLoader();
-            using (StreamReader reader = new StreamReader(Samples.Berlin52_Tour))
+            var loader = new TspFileLoader();
+            using (var reader = new StreamReader(Samples.Berlin52_Tour))
             {
                 tspFile = loader.Load(reader);
                 reader.Close();
@@ -95,13 +94,13 @@ namespace TspLibNetTests
 
         [TestMethod]
         public void ConstructTravelingSalesmanProblems()
-        {            
-            List<string> files = new List<string>(Directory.EnumerateFiles(rootDir, "*.tsp", SearchOption.AllDirectories));
-            foreach (string fileName in files)
+        {
+            var files = new List<string>(Directory.EnumerateFiles(RootDir, "*.tsp", SearchOption.AllDirectories));
+            foreach (var fileName in files)
             {
-                TspFile tspFile = TspFile.Load(fileName);
+                var tspFile = TspFile.Load(fileName);
                 Assert.IsNotNull(tspFile);
-                TravelingSalesmanProblem problem = TravelingSalesmanProblem.FromTspFile(tspFile);
+                var problem = TravelingSalesmanProblem.FromTspFile(tspFile);
                 Assert.IsNotNull(problem);
             }
         }
@@ -109,12 +108,12 @@ namespace TspLibNetTests
         [TestMethod]
         public void ConstructAsynchronousTravelingSalesmanProblems()
         {
-            List<string> files = new List<string>(Directory.EnumerateFiles(rootDir, "*.atsp", SearchOption.AllDirectories));
-            foreach (string fileName in files)
+            var files = new List<string>(Directory.EnumerateFiles(RootDir, "*.atsp", SearchOption.AllDirectories));
+            foreach (var fileName in files)
             {
-                TspFile tspFile = TspFile.Load(fileName);
+                var tspFile = TspFile.Load(fileName);
                 Assert.IsNotNull(tspFile);
-                TravelingSalesmanProblem problem = TravelingSalesmanProblem.FromTspFile(tspFile);
+                var problem = TravelingSalesmanProblem.FromTspFile(tspFile);
                 Assert.IsNotNull(problem);
             }
         }
@@ -122,12 +121,12 @@ namespace TspLibNetTests
         [TestMethod]
         public void ConstructHamiltonianCycleProblems()
         {
-            List<string> files = new List<string>(Directory.EnumerateFiles(rootDir, "*.hcp", SearchOption.AllDirectories));
-            foreach (string fileName in files)
+            var files = new List<string>(Directory.EnumerateFiles(RootDir, "*.hcp", SearchOption.AllDirectories));
+            foreach (var fileName in files)
             {
-                TspFile tspFile = TspFile.Load(fileName);
+                var tspFile = TspFile.Load(fileName);
                 Assert.IsNotNull(tspFile);
-                HamiltonianCycleProblem problem = HamiltonianCycleProblem.FromTspFile(tspFile);
+                var problem = HamiltonianCycleProblem.FromTspFile(tspFile);
                 Assert.IsNotNull(problem);
             }
         }
@@ -135,12 +134,12 @@ namespace TspLibNetTests
         [TestMethod]
         public void ConstructSequentialOrderingProblems()
         {
-            List<string> files = new List<string>(Directory.EnumerateFiles(rootDir, "*.sop", SearchOption.AllDirectories));
-            foreach (string fileName in files)
+            var files = new List<string>(Directory.EnumerateFiles(RootDir, "*.sop", SearchOption.AllDirectories));
+            foreach (var fileName in files)
             {
-                TspFile tspFile = TspFile.Load(fileName);
+                var tspFile = TspFile.Load(fileName);
                 Assert.IsNotNull(tspFile);
-                SequentialOrderingProblem problem = SequentialOrderingProblem.FromTspFile(tspFile);
+                var problem = SequentialOrderingProblem.FromTspFile(tspFile);
                 Assert.IsNotNull(problem);
             }
         }
@@ -148,12 +147,12 @@ namespace TspLibNetTests
         [TestMethod]
         public void ConstructCapacitatedVehicleRoutingProblems()
         {
-            List<string> files = new List<string>(Directory.EnumerateFiles(rootDir, "*.vrp", SearchOption.AllDirectories));
-            foreach (string fileName in files)
+            var files = new List<string>(Directory.EnumerateFiles(RootDir, "*.vrp", SearchOption.AllDirectories));
+            foreach (var fileName in files)
             {
-                TspFile tspFile = TspFile.Load(fileName);
+                var tspFile = TspFile.Load(fileName);
                 Assert.IsNotNull(tspFile);
-                CapacitatedVehicleRoutingProblem problem = CapacitatedVehicleRoutingProblem.FromTspFile(tspFile);
+                var problem = CapacitatedVehicleRoutingProblem.FromTspFile(tspFile);
                 Assert.IsNotNull(problem);
             }
         }
@@ -161,10 +160,10 @@ namespace TspLibNetTests
         [TestMethod]
         public void ConstructTours()
         {
-            List<string> files = new List<string>(Directory.EnumerateFiles(rootDir, "*.tour", SearchOption.AllDirectories));
-            foreach (string fileName in files)
+            var files = new List<string>(Directory.EnumerateFiles(RootDir, "*.tour", SearchOption.AllDirectories));
+            foreach (var fileName in files)
             {
-                TspFile tspFile = TspFile.Load(fileName);
+                var tspFile = TspFile.Load(fileName);
                 Assert.IsNotNull(tspFile);
                 ITour tour = Tour.FromTspFile(tspFile);
                 Assert.IsNotNull(tour);
@@ -189,7 +188,7 @@ namespace TspLibNetTests
             AssertTourDistance(FileType.TSP, "tsp/fri26.tsp", "tsp/fri26.opt.tour", 937);
             AssertTourDistance(FileType.TSP, "tsp/gr24.tsp", "tsp/gr24.opt.tour", 1272);
             AssertTourDistance(FileType.TSP, "tsp/gr48.tsp", "tsp/gr48.opt.tour", 5046);
-            AssertTourDistance(FileType.TSP, "tsp/gr120.tsp", "tsp/gr120.opt.tour", 6942);  
+            AssertTourDistance(FileType.TSP, "tsp/gr120.tsp", "tsp/gr120.opt.tour", 6942);
             AssertTourDistance(FileType.TSP, "tsp/kroA100.tsp", "tsp/kroA100.opt.tour", 21282);
             AssertTourDistance(FileType.TSP, "tsp/kroC100.tsp", "tsp/kroC100.opt.tour", 20749);
             AssertTourDistance(FileType.TSP, "tsp/kroD100.tsp", "tsp/kroD100.opt.tour", 21294);
@@ -208,27 +207,27 @@ namespace TspLibNetTests
             AssertTourDistance(FileType.TSP, "tsp/gr202.tsp", "tsp/gr202.opt.tour", 40160);
             AssertTourDistance(FileType.TSP, "tsp/gr666.tsp", "tsp/gr666.opt.tour", 294358);
         }
-        
+
         [TestMethod]
         public void CheckOptTourDistancesOnHCP()
         {
-            AssertHCPTourDistance(FileType.HCP, "hcp/alb1000.hcp", "hcp/alb1000.opt.tour");
-            AssertHCPTourDistance(FileType.HCP, "hcp/alb2000.hcp", "hcp/alb2000.opt.tour");
-            AssertHCPTourDistance(FileType.HCP, "hcp/alb3000a.hcp", "hcp/alb3000a.opt.tour");
-            AssertHCPTourDistance(FileType.HCP, "hcp/alb3000b.hcp", "hcp/alb3000b.opt.tour");
-            AssertHCPTourDistance(FileType.HCP, "hcp/alb3000c.hcp", "hcp/alb3000c.opt.tour");
-            AssertHCPTourDistance(FileType.HCP, "hcp/alb3000d.hcp", "hcp/alb3000d.opt.tour");
-            AssertHCPTourDistance(FileType.HCP, "hcp/alb3000e.hcp", "hcp/alb3000e.opt.tour");
-            AssertHCPTourDistance(FileType.HCP, "hcp/alb4000.hcp", "hcp/alb4000.opt.tour");
-            AssertHCPTourDistance(FileType.HCP, "hcp/alb5000.hcp", "hcp/alb5000.opt.tour");            
+            AssertHCPTourDistance("hcp/alb1000.hcp", "hcp/alb1000.opt.tour");
+            AssertHCPTourDistance("hcp/alb2000.hcp", "hcp/alb2000.opt.tour");
+            AssertHCPTourDistance("hcp/alb3000a.hcp", "hcp/alb3000a.opt.tour");
+            AssertHCPTourDistance("hcp/alb3000b.hcp", "hcp/alb3000b.opt.tour");
+            AssertHCPTourDistance("hcp/alb3000c.hcp", "hcp/alb3000c.opt.tour");
+            AssertHCPTourDistance("hcp/alb3000d.hcp", "hcp/alb3000d.opt.tour");
+            AssertHCPTourDistance("hcp/alb3000e.hcp", "hcp/alb3000e.opt.tour");
+            AssertHCPTourDistance("hcp/alb4000.hcp", "hcp/alb4000.opt.tour");
+            AssertHCPTourDistance("hcp/alb5000.hcp", "hcp/alb5000.opt.tour");
         }
 
         // TODO: no opt tours for SOP, VRP, ATSP with known distance for validation
 
-        private void AssertTourDistance(FileType problemType, string problemFileName, string tourFileName, int expectedDistance)
+        private static void AssertTourDistance(FileType problemType, string problemFileName, string tourFileName, int expectedDistance)
         {
-            TspFile problemTspFile = TspFile.Load(Path.Combine(rootDir, problemFileName));
-            TspFile tourTspFile = TspFile.Load(Path.Combine(rootDir, tourFileName));
+            var problemTspFile = TspFile.Load(Path.Combine(RootDir, problemFileName));
+            var tourTspFile = TspFile.Load(Path.Combine(RootDir, tourFileName));
 
             Assert.IsNotNull(problemTspFile);
             Assert.IsNotNull(tourTspFile);
@@ -240,9 +239,11 @@ namespace TspLibNetTests
                 case FileType.ATSP:
                     problem = TravelingSalesmanProblem.FromTspFile(problemTspFile);
                     break;
+
                 case FileType.CVRP:
                     problem = CapacitatedVehicleRoutingProblem.FromTspFile(problemTspFile);
                     break;
+
                 case FileType.SOP:
                     problem = SequentialOrderingProblem.FromTspFile(problemTspFile);
                     break;
@@ -256,15 +257,15 @@ namespace TspLibNetTests
             Assert.AreEqual(expectedDistance, problem.TourDistance(tour));
         }
 
-        private void AssertHCPTourDistance(FileType problemType, string problemFileName, string tourFileName)
+        private static void AssertHCPTourDistance(string problemFileName, string tourFileName)
         {
-            TspFile problemTspFile = TspFile.Load(Path.Combine(rootDir, problemFileName));
-            TspFile tourTspFile = TspFile.Load(Path.Combine(rootDir, tourFileName));
+            var problemTspFile = TspFile.Load(Path.Combine(RootDir, problemFileName));
+            var tourTspFile = TspFile.Load(Path.Combine(RootDir, tourFileName));
 
             Assert.IsNotNull(problemTspFile);
             Assert.IsNotNull(tourTspFile);
 
-            HamiltonianCycleProblem problem = HamiltonianCycleProblem.FromTspFile(problemTspFile);
+            var problem = HamiltonianCycleProblem.FromTspFile(problemTspFile);
 
             Assert.IsNotNull(problem);
 
