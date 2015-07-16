@@ -1,17 +1,17 @@
 ﻿/* The MIT License (MIT)
 *
 * Copyright (c) 2014 Pawel Drozdowski
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy of
 * this software and associated documentation files (the "Software"), to deal in
 * the Software without restriction, including without limitation the rights to
 * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 * the Software, and to permit persons to whom the Software is furnished to do so,
 * subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
 * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
@@ -19,11 +19,10 @@
 * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
 namespace TspLibNet
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
     using TspLibNet.Tours;
 
@@ -33,10 +32,10 @@ namespace TspLibNet
     public class TspLib95Item
     {
         /// <summary>
-        /// Member cacheing optimal tour distance
+        /// Member caching optimal tour distance
         /// </summary>
-        private double optimalTourDistance = double.MaxValue;
-        
+        private double _optimalTourDistance = double.MaxValue;
+
         /// <summary>
         /// Creates new instance of TspLib95Item class
         /// </summary>
@@ -52,7 +51,7 @@ namespace TspLibNet
 
             this.Problem = problem;
             this.OptimalTour = optimalTour;
-            this.optimalTourDistance = optimalTourDistance;
+            this._optimalTourDistance = optimalTourDistance;
         }
 
         /// <summary>
@@ -64,20 +63,21 @@ namespace TspLibNet
         /// Gets or sets optimal tour, null if not available
         /// </summary>
         public ITour OptimalTour { get; protected set; }
-        
+
         /// <summary>
-        /// Distance of optimal tour, if not availavle then returns int.MaxValue
+        /// Distance of optimal tour, if not available then returns int.MaxValue
         /// </summary>
         public double OptimalTourDistance
         {
             get
             {
-                if (this.optimalTourDistance == double.MaxValue && this.OptimalTour != null)
+                if (this._optimalTourDistance.Equals(double.MaxValue) &&
+                    this.OptimalTour != null)
                 {
-                    this.optimalTourDistance = this.Problem.TourDistance(this.OptimalTour);
+                    this._optimalTourDistance = this.Problem.TourDistance(this.OptimalTour);
                 }
 
-                return this.optimalTourDistance;
+                return this._optimalTourDistance;
             }
         }
 
@@ -95,12 +95,12 @@ namespace TspLibNet
             builder.Append(this.Problem.Comment);
             builder.Append(" - ");
             builder.Append("OptimalTour: ");
-            if(this.OptimalTour != null)
+            if (this.OptimalTour != null)
                 builder.Append("Available");
             else builder.Append("Not Available");
             builder.Append(" - ");
             builder.Append("OptimalTourDistance: ");
-            if(this.OptimalTourDistance != double.MaxValue)
+            if (this.OptimalTourDistance != double.MaxValue)
                 builder.Append(this.OptimalTourDistance);
             else builder.Append("Unknown");
             return builder.ToString();

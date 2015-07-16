@@ -21,10 +21,7 @@
 */
 namespace TspLibNet.Graph.Nodes
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     /// <summary>
     /// Strongly typed nodes collection

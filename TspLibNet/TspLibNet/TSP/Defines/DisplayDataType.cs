@@ -21,11 +21,6 @@
 */
 namespace TspLibNet.TSP.Defines
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     /// <summary>
     /// Specifies how a graphical display of the nodes can be obtained
     /// </summary>

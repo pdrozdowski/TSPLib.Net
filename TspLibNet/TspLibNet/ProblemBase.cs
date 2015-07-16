@@ -1,17 +1,17 @@
 ﻿/* The MIT License (MIT)
 *
 * Copyright (c) 2014 Pawel Drozdowski
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy of
 * this software and associated documentation files (the "Software"), to deal in
 * the Software without restriction, including without limitation the rights to
 * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 * the Software, and to permit persons to whom the Software is furnished to do so,
 * subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
 * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
@@ -19,20 +19,15 @@
 * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
 namespace TspLibNet
 {
+    using Graph.Edges;
+    using Graph.EdgeWeights;
+    using Graph.FixedEdges;
+    using Graph.Nodes;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using TspLibNet.Graph;
-    using TspLibNet.Tours;
-    using TspLibNet.Graph.Nodes;
-    using TspLibNet.Graph.Edges;
-    using TspLibNet.Graph.EdgeWeights;
-    using TspLibNet.Graph.FixedEdges;
-    using TspLibNet.Graph.Depots;
-    using TspLibNet.Graph.Demand;
+    using Tours;
 
     /// <summary>
     /// Problem base class
@@ -44,11 +39,18 @@ namespace TspLibNet
         /// </summary>
         /// <param name="name">Problem name</param>
         /// <param name="comment">Comment on problem</param>
+        /// <param name="type">The problem type (TSP, ATSP, etc)</param>
         /// <param name="nodeProvider">Provider of graph nodes</param>
         /// <param name="edgeProvider">Provider of graph edges</param>
         /// <param name="edgeWeightsProvider">Provider of edge weights</param>
         /// <param name="fixedEdgesProvider">Provider of solution fixed edges</param>
-        public ProblemBase(string name, string comment, INodeProvider nodeProvider, IEdgeProvider edgeProvider, IEdgeWeightsProvider edgeWeightsProvider, IFixedEdgesProvider fixedEdgesProvider)
+        protected ProblemBase(string name,
+                              string comment,
+                              ProblemType type,
+                              INodeProvider nodeProvider,
+                              IEdgeProvider edgeProvider,
+                              IEdgeWeightsProvider edgeWeightsProvider,
+                              IFixedEdgesProvider fixedEdgesProvider)
         {
             if (nodeProvider == null)
             {
@@ -70,13 +72,13 @@ namespace TspLibNet
                 throw new ArgumentNullException("fixedEdgesProvider");
             }
 
-
-            this.Name = name;
-            this.Comment = comment;
-            this.NodeProvider = nodeProvider;
-            this.EdgeProvider = edgeProvider;
-            this.EdgeWeightsProvider = edgeWeightsProvider;
-            this.FixedEdgesProvider = fixedEdgesProvider;
+            Name = name;
+            Comment = comment;
+            Type = type;
+            NodeProvider = nodeProvider;
+            EdgeProvider = edgeProvider;
+            EdgeWeightsProvider = edgeWeightsProvider;
+            FixedEdgesProvider = fixedEdgesProvider;
         }
 
         /// <summary>
@@ -100,6 +102,11 @@ namespace TspLibNet
         public IFixedEdgesProvider FixedEdgesProvider { get; protected set; }
 
         /// <summary>
+        /// Represents the problem type (TSP, ATSP, etc).
+        /// </summary>
+        public ProblemType Type { get; protected set; }
+
+        /// <summary>
         /// Gets file name - Identifies the data file.
         /// </summary>
         public string Name { get; protected set; }
@@ -108,7 +115,7 @@ namespace TspLibNet
         /// Gets file comment - additional comments from problem author
         /// </summary>
         public string Comment { get; protected set; }
-        
+
         /// <summary>
         /// Gets tour distance for a given problem
         /// </summary>

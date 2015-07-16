@@ -22,9 +22,6 @@
 namespace TspLibNet.Exceptions
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     /// <summary>
     /// Graph exception thrown when graph is not consistent

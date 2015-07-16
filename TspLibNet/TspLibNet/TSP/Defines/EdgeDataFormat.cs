@@ -21,11 +21,6 @@
 */
 namespace TspLibNet.TSP.Defines
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     /// <summary>
     /// Format of edges of a graph
     /// </summary>

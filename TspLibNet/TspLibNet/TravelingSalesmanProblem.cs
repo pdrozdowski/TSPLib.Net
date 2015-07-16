@@ -1,17 +1,17 @@
 ﻿/* The MIT License (MIT)
 *
 * Copyright (c) 2014 Pawel Drozdowski
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy of
 * this software and associated documentation files (the "Software"), to deal in
 * the Software without restriction, including without limitation the rights to
 * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 * the Software, and to permit persons to whom the Software is furnished to do so,
 * subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
 * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
@@ -19,22 +19,22 @@
 * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
+using TspLibNet.DistanceFunctions;
+using TspLibNet.TSP.Defines;
+
 namespace TspLibNet
 {
+    using Exceptions;
+    using Graph.Edges;
+    using Graph.EdgeWeights;
+    using Graph.FixedEdges;
+    using Graph.Nodes;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using TspLibNet.Graph;
-    using TspLibNet.Tours;
-    using TspLibNet.Graph.Nodes;
-    using TspLibNet.Graph.Edges;
-    using TspLibNet.Graph.EdgeWeights;
-    using TspLibNet.Graph.FixedEdges;
-    using TspLibNet.Graph.Depots;
-    using TspLibNet.Graph.Demand;
-    using TspLibNet.TSP;
-    using TspLibNet.Exceptions;
+    using Tours;
+    using TSP;
 
     /// <summary>
     /// Traveling Salesman Problem
@@ -55,8 +55,13 @@ namespace TspLibNet
         /// <param name="edgeProvider">provider of edges</param>
         /// <param name="edgeWeightsProvider">provider of edge weights</param>
         /// <param name="fixedEdgesProvider">provider of fixed edges</param>
-        public TravelingSalesmanProblem(string name, string comment, INodeProvider nodeProvider, IEdgeProvider edgeProvider, IEdgeWeightsProvider edgeWeightsProvider, IFixedEdgesProvider fixedEdgesProvider)
-            : base(name, comment, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider)
+        public TravelingSalesmanProblem(string name,
+                                        string comment,
+                                        INodeProvider nodeProvider,
+                                        IEdgeProvider edgeProvider,
+                                        IEdgeWeightsProvider edgeWeightsProvider,
+                                        IFixedEdgesProvider fixedEdgesProvider)
+            : base(name, comment, ProblemType.TSP, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider)
         {
         }
 
@@ -77,7 +82,7 @@ namespace TspLibNet
         /// <returns>Loaded problem</returns>
         public static TravelingSalesmanProblem FromTspFile(TspFile tspFile)
         {
-            if (tspFile.Type != TSP.Defines.FileType.TSP && tspFile.Type != TSP.Defines.FileType.ATSP)
+            if (tspFile.Type != FileType.TSP && tspFile.Type != FileType.ATSP)
             {
                 throw new ArgumentOutOfRangeException("tspFile");
             }
@@ -105,10 +110,10 @@ namespace TspLibNet
 
             var nodeProvider = new NodeListBasedNodeProvider(nodes);
             var edgeProvider = new NodeBasedEdgeProvider(nodes);
-            var edgeWeightsProvider = new FunctionBasedWeightProviderWithCaching(new DistanceFunctions.Euclidean());
+            var edgeWeightsProvider = new FunctionBasedWeightProviderWithCaching(new Euclidean());
             var fixedEdgesProvider = new EdgeListBasedFixedEdgesProvider(new EdgesCollection());
             return new TravelingSalesmanProblem(nodes.Count + " city TSP problem", "Generated", nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider);
-        }       
+        }
 
         /// <summary>
         /// Gets tour distance for a given problem
@@ -117,13 +122,13 @@ namespace TspLibNet
         /// <returns>Tour distance</returns>
         public override double TourDistance(ITour tour)
         {
-            this.ValidateTour(tour);
+            ValidateTour(tour);
             double distance = 0;
             for (int i = -1; i + 1 < tour.Nodes.Count; i++)
             {
-                INode first = i == -1 ? this.NodeProvider.GetNode(tour.Nodes.Last()) : this.NodeProvider.GetNode(tour.Nodes[i]);
-                INode second = this.NodeProvider.GetNode(tour.Nodes[i + 1]);
-                double weight = this.EdgeWeightsProvider.GetWeight(first, second);
+                INode first = i == -1 ? NodeProvider.GetNode(tour.Nodes.Last()) : NodeProvider.GetNode(tour.Nodes[i]);
+                INode second = NodeProvider.GetNode(tour.Nodes[i + 1]);
+                double weight = EdgeWeightsProvider.GetWeight(first, second);
                 distance += weight;
             }
 
@@ -134,14 +139,13 @@ namespace TspLibNet
         /// Validate given solution
         /// </summary>
         /// <param name="tour">Tour to check</param>
-        /// <param name="errors">outputs list of errors found in tour</param>
         protected void ValidateTour(ITour tour)
         {
             if (tour == null)
             {
                 throw new ArgumentNullException("tour");
             }
-            
+
             if (tour.Dimension != tour.Nodes.Count)
             {
                 throw new TourInvalidException("Tour dimension does not match number of nodes on a list");
@@ -155,7 +159,7 @@ namespace TspLibNet
                     throw new TourInvalidException("Tour is invalid, has a node " + nodeId + " multiple times");
                 }
 
-                if (null == this.NodeProvider.GetNode(nodeId))
+                if (null == NodeProvider.GetNode(nodeId))
                 {
                     throw new TourInvalidException("Tour is invalid, has a node " + nodeId + " which is not present in a problem");
                 }
