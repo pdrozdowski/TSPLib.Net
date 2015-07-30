@@ -49,6 +49,7 @@
     <Compile Include="Samples.cs" />
     <Compile Include="TspFileLoaderTests.cs" />
     <Compile Include="TspDistanceCalculationTests.cs" />
+    <Compile Include="TspLib95Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TspLibNet\TspLibNet.csproj">
