@@ -85,29 +85,6 @@ namespace TspLibNet
         }
 
         /// <summary>
-        /// Load problem from TSP file
-        /// </summary>
-        /// <param name="tspFile">TSP file instance</param>
-        /// <returns>Loaded problem</returns>
-        public static CapacitatedVehicleRoutingProblem FromTspFile(TspFile tspFile)
-        {
-            if (tspFile.Type != FileType.CVRP)
-            {
-                throw new ArgumentOutOfRangeException("tspFile");
-            }
-
-            TspFileDataExtractor extractor = new TspFileDataExtractor(tspFile);
-            var nodeProvider = extractor.MakeNodeProvider();
-            var nodes = nodeProvider.GetNodes();
-            var edgeProvider = extractor.MakeEdgeProvider(nodes);
-            var edgeWeightsProvider = extractor.MakeEdgeWeightsProvider();
-            var fixedEdgesProvider = extractor.MakeFixedEdgesProvider(nodes);
-            var depots = extractor.MakeDepotsProvider(nodes);
-            var demand = extractor.MakeDemandProvider(nodes);
-            return new CapacitatedVehicleRoutingProblem(tspFile.Name, tspFile.Comment, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider, depots, demand);
-        }
-
-        /// <summary>
         /// Gets depots provider
         /// </summary>
         public IDepotsProvider DepotsProvider { get; protected set; }
@@ -131,9 +108,32 @@ namespace TspLibNet
         /// Validate given solution
         /// </summary>
         /// <param name="tour">Tour to check</param>
-        protected void ValidateTour(ITour tour)
+        private void ValidateTour(ITour tour)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Load problem from TSP file
+        /// </summary>
+        /// <param name="tspFile">TSP file instance</param>
+        /// <returns>Loaded problem</returns>
+        private static CapacitatedVehicleRoutingProblem FromTspFile(TspFile tspFile)
+        {
+            if (tspFile.Type != FileType.CVRP)
+            {
+                throw new ArgumentOutOfRangeException("tspFile");
+            }
+
+            TspFileDataExtractor extractor = new TspFileDataExtractor(tspFile);
+            var nodeProvider = extractor.MakeNodeProvider();
+            var nodes = nodeProvider.GetNodes();
+            var edgeProvider = extractor.MakeEdgeProvider(nodes);
+            var edgeWeightsProvider = extractor.MakeEdgeWeightsProvider();
+            var fixedEdgesProvider = extractor.MakeFixedEdgesProvider(nodes);
+            var depots = extractor.MakeDepotsProvider(nodes);
+            var demand = extractor.MakeDemandProvider(nodes);
+            return new CapacitatedVehicleRoutingProblem(tspFile.Name, tspFile.Comment, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider, depots, demand);
         }
     }
 }

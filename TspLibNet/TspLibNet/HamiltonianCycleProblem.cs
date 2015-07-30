@@ -74,27 +74,6 @@ namespace TspLibNet
         }
 
         /// <summary>
-        /// Load problem from TSP file
-        /// </summary>
-        /// <param name="tspFile">TSP file instance</param>
-        /// <returns>Loaded problem</returns>
-        public static HamiltonianCycleProblem FromTspFile(TspFile tspFile)
-        {
-            if (tspFile.Type != FileType.HCP)
-            {
-                throw new ArgumentOutOfRangeException("tspFile");
-            }
-
-            TspFileDataExtractor extractor = new TspFileDataExtractor(tspFile);
-            var nodeProvider = extractor.MakeNodeProvider();
-            var nodes = nodeProvider.GetNodes();
-            var edgeProvider = extractor.MakeEdgeProvider(nodes);
-            var edgeWeightsProvider = new NodeAdjacencyBasedWeightProvider(edgeProvider, 1, 2);
-            var fixedEdgesProvider = extractor.MakeFixedEdgesProvider(nodes);
-            return new HamiltonianCycleProblem(tspFile.Name, tspFile.Comment, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider);
-        }
-
-        /// <summary>
         /// Gets distance of optimal tour for HCP
         /// </summary>
         public double OptimalTourDistance
@@ -129,7 +108,7 @@ namespace TspLibNet
         /// Validate given solution
         /// </summary>
         /// <param name="tour">Tour to check</param>
-        protected void ValidateTour(ITour tour)
+        private void ValidateTour(ITour tour)
         {
             if (tour == null)
             {
@@ -156,6 +135,27 @@ namespace TspLibNet
 
                 identifiers.Add(nodeId);
             }
+        }
+
+        /// <summary>
+        /// Load problem from TSP file
+        /// </summary>
+        /// <param name="tspFile">TSP file instance</param>
+        /// <returns>Loaded problem</returns>
+        private static HamiltonianCycleProblem FromTspFile(TspFile tspFile)
+        {
+            if (tspFile.Type != FileType.HCP)
+            {
+                throw new ArgumentOutOfRangeException("tspFile");
+            }
+
+            TspFileDataExtractor extractor = new TspFileDataExtractor(tspFile);
+            var nodeProvider = extractor.MakeNodeProvider();
+            var nodes = nodeProvider.GetNodes();
+            var edgeProvider = extractor.MakeEdgeProvider(nodes);
+            var edgeWeightsProvider = new NodeAdjacencyBasedWeightProvider(edgeProvider, 1, 2);
+            var fixedEdgesProvider = extractor.MakeFixedEdgesProvider(nodes);
+            return new HamiltonianCycleProblem(tspFile.Name, tspFile.Comment, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider);
         }
     }
 }
