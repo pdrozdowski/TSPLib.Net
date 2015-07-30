@@ -38,11 +38,14 @@ namespace TspLibNet
 
     /// <summary>
     /// Traveling Salesman Problem
-    /// This class servers for synchronous and asynchronous Traveling Salesman Problem.
-    /// The problem is to visit all the nodes of the graph with a shortes posible tour.
-    /// In synchronous variant edges weights are invariant of a move direction, in asynchronous they can have different
-    /// weights whether going from A to B or from B to A... usualy then weights are provided in form of a weights matrix.
-    /// For synchronous problem weights are commonly made by the one of distance functions.
+    ///
+    /// This class represents both symmetric and asymmetric Traveling Salesman Problems:
+    ///
+    /// "Given a set of n nodes and distances for each pair of nodes, find a roundtrip of minimal total length
+    /// visiting each node exactly once."
+    ///
+    /// For the symmetric TSP, the distance from node i to node j is the same as from node j to node i.
+    /// For asymmetric TSP, the distance from node i to node j and the distance from node j to node i may be different.
     /// </summary>
     public class TravelingSalesmanProblem : ProblemBase
     {
@@ -51,17 +54,19 @@ namespace TspLibNet
         /// </summary>
         /// <param name="name">problem name</param>
         /// <param name="comment">comment on problem from the author</param>
+        /// <param name="type">TSP or ATSP</param>
         /// <param name="nodeProvider">provider of nodes</param>
         /// <param name="edgeProvider">provider of edges</param>
         /// <param name="edgeWeightsProvider">provider of edge weights</param>
         /// <param name="fixedEdgesProvider">provider of fixed edges</param>
         public TravelingSalesmanProblem(string name,
                                         string comment,
+                                        ProblemType type,
                                         INodeProvider nodeProvider,
                                         IEdgeProvider edgeProvider,
                                         IEdgeWeightsProvider edgeWeightsProvider,
                                         IFixedEdgesProvider fixedEdgesProvider)
-            : base(name, comment, ProblemType.TSP, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider)
+            : base(name, comment, type, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider)
         {
         }
 
@@ -73,27 +78,6 @@ namespace TspLibNet
         public static TravelingSalesmanProblem FromFile(string fileName)
         {
             return FromTspFile(TspFile.Load(fileName));
-        }
-
-        /// <summary>
-        /// Load problem from TSP file
-        /// </summary>
-        /// <param name="tspFile">TSP file instance</param>
-        /// <returns>Loaded problem</returns>
-        public static TravelingSalesmanProblem FromTspFile(TspFile tspFile)
-        {
-            if (tspFile.Type != FileType.TSP && tspFile.Type != FileType.ATSP)
-            {
-                throw new ArgumentOutOfRangeException("tspFile");
-            }
-
-            TspFileDataExtractor extractor = new TspFileDataExtractor(tspFile);
-            var nodeProvider = extractor.MakeNodeProvider();
-            var nodes = nodeProvider.GetNodes();
-            var edgeProvider = extractor.MakeEdgeProvider(nodes);
-            var edgeWeightsProvider = extractor.MakeEdgeWeightsProvider();
-            var fixedEdgesProvider = extractor.MakeFixedEdgesProvider(nodes);
-            return new TravelingSalesmanProblem(tspFile.Name, tspFile.Comment, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider);
         }
 
         /// <summary>
@@ -112,7 +96,7 @@ namespace TspLibNet
             var edgeProvider = new NodeBasedEdgeProvider(nodes);
             var edgeWeightsProvider = new FunctionBasedWeightProviderWithCaching(new Euclidean());
             var fixedEdgesProvider = new EdgeListBasedFixedEdgesProvider(new EdgesCollection());
-            return new TravelingSalesmanProblem(nodes.Count + " city TSP problem", "Generated", nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider);
+            return new TravelingSalesmanProblem(nodes.Count + " city TSP problem", "Generated", ProblemType.ATSP, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider);
         }
 
         /// <summary>
@@ -139,7 +123,7 @@ namespace TspLibNet
         /// Validate given solution
         /// </summary>
         /// <param name="tour">Tour to check</param>
-        protected void ValidateTour(ITour tour)
+        private void ValidateTour(ITour tour)
         {
             if (tour == null)
             {
@@ -166,6 +150,28 @@ namespace TspLibNet
 
                 identifiers.Add(nodeId);
             }
+        }
+
+        /// <summary>
+        /// Load problem from TSP file
+        /// </summary>
+        /// <param name="tspFile">TSP file instance</param>
+        /// <returns>Loaded problem</returns>
+        private static TravelingSalesmanProblem FromTspFile(TspFile tspFile)
+        {
+            if (tspFile.Type != FileType.TSP && tspFile.Type != FileType.ATSP)
+            {
+                throw new ArgumentOutOfRangeException("tspFile");
+            }
+
+            TspFileDataExtractor extractor = new TspFileDataExtractor(tspFile);
+            var nodeProvider = extractor.MakeNodeProvider();
+            var nodes = nodeProvider.GetNodes();
+            var edgeProvider = extractor.MakeEdgeProvider(nodes);
+            var edgeWeightsProvider = extractor.MakeEdgeWeightsProvider();
+            var fixedEdgesProvider = extractor.MakeFixedEdgesProvider(nodes);
+            var type = (tspFile.Type == FileType.TSP) ? ProblemType.TSP : ProblemType.ATSP;
+            return new TravelingSalesmanProblem(tspFile.Name, tspFile.Comment, type, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider);
         }
     }
 }

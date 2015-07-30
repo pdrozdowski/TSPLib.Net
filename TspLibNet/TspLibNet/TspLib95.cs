@@ -31,6 +31,20 @@ namespace TspLibNet
 
     /// <summary>
     /// Main class providing access to all TSP library resources.
+    ///
+    /// TspLib95 provides the entry point to TSPLIB95 instances and should be considered
+    /// the default starting point for any application making use of TSPLib.Net.
+    ///
+    /// This class allows you to load instances by type, in total (entire library) or individually
+    /// by name.  It furthermore provides access to lists of instances by type, all instances
+    /// in total, or individual instances by name (where name is the name of the file containing
+    /// the specific problem instance excluding the file extension).
+    ///
+    /// Each TSPLIB95 instance is wrapped within a <see>TspLib95Item</see> which ultimately provides
+    /// all the available information for the specific TSP problem it wraps. In other words, not
+    /// only is the TSP graph accessible (through <see>IProblem</see> and <see>ProblemBase</see>),
+    /// but also the best known solutions (if they exist) in the form of optimal tours and optimal tour
+    /// distances.
     /// </summary>
     public class TspLib95
     {
@@ -43,7 +57,7 @@ namespace TspLibNet
         public List<TspLib95Item> Items { get; private set; }
 
         /// <summary>
-        /// Gets all TSP items.
+        /// Gets all symmetric TSP items.
         /// </summary>
         public IEnumerable<TspLib95Item> TSPItems()
         {

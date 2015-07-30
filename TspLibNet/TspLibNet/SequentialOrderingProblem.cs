@@ -67,11 +67,30 @@ namespace TspLibNet
         }
 
         /// <summary>
+        /// Gets tour distance for a given problem
+        /// </summary>
+        /// <param name="tour">Tour to check</param>
+        /// <returns>Tour distance</returns>
+        public override double TourDistance(ITour tour)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Validate given solution
+        /// </summary>
+        /// <param name="tour">Tour to check</param>
+        private void ValidateTour(ITour tour)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Load problem from TSP file
         /// </summary>
         /// <param name="tspFile">TSP file instance</param>
         /// <returns>Loaded problem</returns>
-        public static SequentialOrderingProblem FromTspFile(TspFile tspFile)
+        private static SequentialOrderingProblem FromTspFile(TspFile tspFile)
         {
             if (tspFile.Type != FileType.SOP)
             {
@@ -91,25 +110,6 @@ namespace TspLibNet
             tspFile.EdgeWeights.Insert(0, weight);
 
             return new SequentialOrderingProblem(tspFile.Name, tspFile.Comment, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider);
-        }
-
-        /// <summary>
-        /// Gets tour distance for a given problem
-        /// </summary>
-        /// <param name="tour">Tour to check</param>
-        /// <returns>Tour distance</returns>
-        public override double TourDistance(ITour tour)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Validate given solution
-        /// </summary>
-        /// <param name="tour">Tour to check</param>
-        protected void ValidateTour(ITour tour)
-        {
-            throw new NotImplementedException();
         }
     }
 }
