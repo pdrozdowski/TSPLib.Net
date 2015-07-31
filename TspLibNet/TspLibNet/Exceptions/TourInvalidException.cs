@@ -26,6 +26,7 @@ namespace TspLibNet.Exceptions
     /// <summary>
     /// Exception thrown when tour is not valid
     /// </summary>
+    [Serializable]
     public class TourInvalidException : Exception
     {
         /// <summary>

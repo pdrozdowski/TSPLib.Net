@@ -62,12 +62,12 @@ namespace TspLibNet
         {
             if (depotsProvider == null)
             {
-                throw new ArgumentNullException("depotsProvider");
+                throw new ArgumentNullException(nameof(depotsProvider));
             }
 
             if (demandProvider == null)
             {
-                throw new ArgumentNullException("demandProvider");
+                throw new ArgumentNullException(nameof(demandProvider));
             }
 
             DepotsProvider = depotsProvider;
@@ -99,6 +99,7 @@ namespace TspLibNet
         /// </summary>
         /// <param name="tour">Tour to check</param>
         /// <returns>Tour distance</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Notifications", "RECS0083:Shows NotImplementedException throws in the quick task bar", Justification = "<Pending>")]
         public override double TourDistance(ITour tour)
         {
             throw new NotImplementedException();

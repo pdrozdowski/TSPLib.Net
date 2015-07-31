@@ -37,7 +37,7 @@ namespace TspLibNet.Graph.Nodes
         {
             if (nodes == null)
             {
-                throw new ArgumentNullException("nodes");
+                throw new ArgumentNullException(nameof(nodes));
             }
 
             this.Nodes = new NodesCollection(nodes);

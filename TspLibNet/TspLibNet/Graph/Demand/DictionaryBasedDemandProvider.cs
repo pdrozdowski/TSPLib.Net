@@ -38,7 +38,7 @@ namespace TspLibNet.Graph.Demand
         {
             if (demandDictionary == null)
             {
-                throw new ArgumentNullException("demandDictionary");
+                throw new ArgumentNullException(nameof(demandDictionary));
             }
 
             this.DemandDictionary = new Dictionary<INode, int>(demandDictionary);
@@ -57,7 +57,7 @@ namespace TspLibNet.Graph.Demand
         {
             if (!this.DemandDictionary.ContainsKey(node))
             {
-                throw new ArgumentOutOfRangeException("node");
+                throw new ArgumentOutOfRangeException(nameof(node));
             }
 
             return this.DemandDictionary[node];

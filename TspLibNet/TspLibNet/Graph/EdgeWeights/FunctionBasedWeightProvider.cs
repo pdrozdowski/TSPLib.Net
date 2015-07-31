@@ -39,7 +39,7 @@ namespace TspLibNet.Graph.EdgeWeights
         {
             if (distanceFunction == null)
             {
-                throw new ArgumentNullException("distanceFunction");
+                throw new ArgumentNullException(nameof(distanceFunction));
             }
 
             this.DistanceFunction = distanceFunction;

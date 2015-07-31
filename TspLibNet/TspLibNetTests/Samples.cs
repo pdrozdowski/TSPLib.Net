@@ -39,7 +39,7 @@ namespace TspLibNetTests
         {
             get
             {
-                MemoryStream stream = new MemoryStream();
+                var stream = new MemoryStream();
                 using (StreamWriter writer = new StreamWriter(stream))
                 {
                     writer.WriteLine("NAME: berlin52");
@@ -103,7 +103,6 @@ namespace TspLibNetTests
                     writer.WriteLine("EOF");
 
                     writer.Flush();
-                    writer.Close();
                 }
                                 
                 return new MemoryStream(stream.GetBuffer());
@@ -117,7 +116,7 @@ namespace TspLibNetTests
         {
             get
             {
-                MemoryStream stream = new MemoryStream();
+                var stream = new MemoryStream();
                 using (StreamWriter writer = new StreamWriter(stream))
                 {
                     writer.WriteLine("NAME : berlin52.opt.tour");
@@ -181,7 +180,6 @@ namespace TspLibNetTests
                     writer.WriteLine("");
 
                     writer.Flush();
-                    writer.Close();
                 }
 
                 return new MemoryStream(stream.GetBuffer());

@@ -26,6 +26,7 @@ namespace TspLibNet.Exceptions
     /// <summary>
     /// Graph exception thrown when graph is not consistent
     /// </summary>
+    [Serializable]
     public class GraphException : Exception
     {
         /// <summary>

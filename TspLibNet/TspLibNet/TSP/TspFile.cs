@@ -128,11 +128,10 @@ namespace TspLibNet.TSP
         public static TspFile Load(string fileName)
         {
             TspFile result = null;
-            TspFileLoader loader = new TspFileLoader();
+            var loader = new TspFileLoader();
             using (StreamReader reader = new StreamReader(fileName))
             {
                 result = loader.Load(reader);
-                reader.Close();
             }
 
             return result;

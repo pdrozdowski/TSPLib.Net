@@ -41,12 +41,12 @@ namespace TspLibNet.DistanceFunctions
         {
             if (a == null)
             {
-                throw new ArgumentNullException("a");
+                throw new ArgumentNullException(nameof(a));
             }
 
             if (b == null)
             {
-                throw new ArgumentNullException("b");
+                throw new ArgumentNullException(nameof(b));
             }
 
             if (a is Node2D && b is Node2D)

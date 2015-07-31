@@ -39,7 +39,7 @@ namespace TspLibNet.Graph.Edges
         {
             if (nodes == null)
             {
-                throw new ArgumentNullException("nodes");
+                throw new ArgumentNullException(nameof(nodes));
             }
 
             this.Nodes = new NodesCollection(nodes);

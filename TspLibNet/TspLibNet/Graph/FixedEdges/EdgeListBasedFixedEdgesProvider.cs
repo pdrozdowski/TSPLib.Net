@@ -38,7 +38,7 @@ namespace TspLibNet.Graph.FixedEdges
         {
             if (fixedEdges == null)
             {
-                throw new ArgumentNullException("fixedEdges");
+                throw new ArgumentNullException(nameof(fixedEdges));
             }
 
             this.FixedEdges = new EdgesCollection(fixedEdges);

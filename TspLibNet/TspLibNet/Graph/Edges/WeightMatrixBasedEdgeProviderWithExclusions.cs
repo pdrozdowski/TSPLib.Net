@@ -40,17 +40,17 @@ namespace TspLibNet.Graph.Edges
         {
             if (matrix == null)
             {
-                throw new ArgumentNullException("matrix");
+                throw new ArgumentNullException(nameof(matrix));
             }
 
             if (matrix.GetLength(0) != matrix.GetLength(1))
             {
-                throw new ArgumentOutOfRangeException("weights");
+                throw new ArgumentOutOfRangeException(nameof(matrix));
             }
 
             if (exclusions == null)
             {
-                throw new ArgumentNullException("exclusions");
+                throw new ArgumentNullException(nameof(exclusions));
             }
 
             this.WeightsMatrix = matrix;

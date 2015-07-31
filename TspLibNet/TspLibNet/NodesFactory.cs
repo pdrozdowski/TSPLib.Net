@@ -29,7 +29,7 @@ namespace TspLibNet
     /// <summary>
     /// Factory making nodes
     /// </summary>
-    public class NodesFactory
+    public static class NodesFactory
     {
         /// <summary>
         /// Create random problem with given number of nodes
@@ -40,8 +40,8 @@ namespace TspLibNet
         /// <returns>Generated problem</returns>
         public static NodesCollection MakeNodes(int numberOfNodes, int width, int height)
         {
-            Random random = new Random((int)DateTime.Now.Ticks);
-            NodesCollection nodes = new NodesCollection();
+            var random = new Random((int)DateTime.Now.Ticks);
+            var nodes = new NodesCollection();
             for (int i = 0; i < numberOfNodes; i++)
             {
                 nodes.Add(new Node2D(i + 1, random.NextDouble() * width, random.NextDouble() * height));

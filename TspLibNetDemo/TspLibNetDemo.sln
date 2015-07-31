@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TspLibNetDemo", "TspLibNetDemo\TspLibNetDemo.csproj", "{65D5EA96-6CB8-4D28-937C-88998F61B862}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TspLibNet", "..\TspLibNet\TspLibNet\TspLibNet.csproj", "{A5F17DFD-80C3-4F1F-B85F-F30E24E6F158}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{65D5EA96-6CB8-4D28-937C-88998F61B862}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65D5EA96-6CB8-4D28-937C-88998F61B862}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65D5EA96-6CB8-4D28-937C-88998F61B862}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65D5EA96-6CB8-4D28-937C-88998F61B862}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5F17DFD-80C3-4F1F-B85F-F30E24E6F158}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5F17DFD-80C3-4F1F-B85F-F30E24E6F158}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5F17DFD-80C3-4F1F-B85F-F30E24E6F158}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5F17DFD-80C3-4F1F-B85F-F30E24E6F158}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

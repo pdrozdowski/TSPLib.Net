@@ -69,7 +69,7 @@ namespace TspLibNet.DistanceFunctions
         /// <returns>converted value</returns>
         protected double CalcGeoValue(double value)
         {
-            double deg = (int)(value);
+            var deg = (int)(value);
             var min = value - deg;
             var rad = deg + (5.0 * min) / 3.0;
             return (Math.PI * rad) / 180.0;

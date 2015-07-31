@@ -17,7 +17,15 @@ The TSPLIB95 directory contains data files and best known solutions information 
 
 ### TspLibNet
 
-The TspLib95 class is the entry point to the data layer with a straightforward API, please see the source in TspLib95.cs
+TspLib95 provides the entry point to TSPLIB95 instances and should be considered the default starting point for any application making use of TSPLib.Net.  This class allows you to load instances by type, in total (entire library) or individually by name.  It furthermore provides access to lists of instances by type, all instances in total, or individual instances by name (where name is the name of the file containing the specific problem instance excluding the file extension).
+
+Each TSPLIB95 instance is wrapped within a TspLib95Item which ultimately provides all the available information for the specific TSP problem it wraps. In other words, not only is the TSP graph accessible (through IProblem and ProblemBase), but also the best known solutions (if they exist) in the form of optimal tours and optimal tour distances.
+
+IntelliSense should take you the rest of the way, but please see the source if anything is lacking.
+
+### TspLibNetDemo
+
+TspLibNetDemo is a basic little demo app that allows you to view information related to TSPLIB95 instances in a convenient GUI (the demo app lives in a completely separate solution from that of the library itself and therefore doesn't affect library usage or distribution).
 
 ## Licensing
 

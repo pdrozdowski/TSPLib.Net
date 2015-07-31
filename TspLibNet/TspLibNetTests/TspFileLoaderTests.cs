@@ -44,7 +44,6 @@ namespace TspLibNetTests
             using (var reader = new StreamReader(Samples.Berlin52_Problem))
             {
                 tspFile = loader.Load(reader);
-                reader.Close();
             }
 
             Assert.IsNotNull(tspFile);
@@ -77,7 +76,6 @@ namespace TspLibNetTests
             using (var reader = new StreamReader(Samples.Berlin52_Tour))
             {
                 tspFile = loader.Load(reader);
-                reader.Close();
             }
 
             Assert.IsNotNull(tspFile);

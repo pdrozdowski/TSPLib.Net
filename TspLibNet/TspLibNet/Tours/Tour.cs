@@ -41,12 +41,12 @@ namespace TspLibNet.Tours
         {
             if (dimension < 0)
             {
-                throw new ArgumentOutOfRangeException("dimension");
+                throw new ArgumentOutOfRangeException(nameof(dimension));
             }
 
             if (nodes == null)
             {
-                throw new ArgumentNullException("nodes");
+                throw new ArgumentNullException(nameof(nodes));
             }
 
             this.Name = name;
@@ -88,7 +88,7 @@ namespace TspLibNet.Tours
         {
             if (tspFile.Type != TSP.Defines.FileType.TOUR)
             {
-                throw new ArgumentOutOfRangeException("tspFile");
+                throw new ArgumentOutOfRangeException(nameof(tspFile));
             }
 
             return new Tour(tspFile.Name, tspFile.Comment, tspFile.Dimension, tspFile.Tour);
