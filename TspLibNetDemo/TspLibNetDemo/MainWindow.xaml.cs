@@ -22,7 +22,7 @@ namespace TspLibNetDemo
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string _libPath = @"C:\Users\williamh\Documents\Repos\TSPLib.Net\TSPLIB95";
+        private const string _libPath = @"..\..\..\..\TSPLIB95";
         private TspLib95 _tspLib;
 
         public MainWindow()
