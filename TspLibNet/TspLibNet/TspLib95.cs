@@ -98,11 +98,12 @@ namespace TspLibNet
 
         /// <summary>
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">The problem name (file name excluding extension)</param>
+        /// <param name="type">Problem type - TSP, ATSP, SOP, HCP, CVRP</param>
         /// <returns>The relevant TspLib95Item associated with "name" or a default item if not found</returns>
-        public TspLib95Item GetItemByName(string name)
+        public TspLib95Item GetItemByName(string name, ProblemType type)
         {
-            return Items.Select(i => i).FirstOrDefault(i => i.Problem.Name == name);
+            return Items.Select(i => i).FirstOrDefault(i => i.Problem.Name == name && i.Problem.Type == type);
         }
 
         /// <summary>
@@ -114,6 +115,11 @@ namespace TspLibNet
             if (string.IsNullOrWhiteSpace(tspLib95Path))
             {
                 throw new ArgumentNullException("tspLib95Path");
+            }
+
+            if (!Directory.Exists(tspLib95Path))
+            {
+                throw new ArgumentException("Path does not exist: " + tspLib95Path);
             }
 
             _tspLib95Path = tspLib95Path;
@@ -134,11 +140,11 @@ namespace TspLibNet
         /// <returns>A list of all TSPLIB95 problem items.</returns>
         public IEnumerable<TspLib95Item> LoadAll()
         {
-            Items.AddRange(LoadAllTSP());
-            Items.AddRange(LoadAllATSP());
-            Items.AddRange(LoadAllHCP());
-            Items.AddRange(LoadAllSOP());
-            Items.AddRange(LoadAllCVRP());
+            LoadAllTSP();
+            LoadAllATSP();
+            LoadAllHCP();
+            LoadAllSOP();
+            LoadAllCVRP();
             return Items;
         }
 
@@ -226,7 +232,7 @@ namespace TspLibNet
         public void LoadSOP(string name)
         {
             // do not load best solution, lack of support at the moment
-            ProblemLoader(name, "SequentialOrderingProblem", ".sop", "SOP", "????.txt", ".opt.tour");
+            ProblemLoader(name, "SequentialOrderingProblem", ".sop", "SOP", "broken.txt", ".opt.tour");
         }
 
         /// <summary>
