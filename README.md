@@ -19,6 +19,10 @@ The TSPLIB95 directory contains data files and best known solutions information 
 
 The TspLib95 class is the entry point to the data layer with a straightforward API, please see the source in TspLib95.cs
 
+### TspLibNetDemo
+
+TspLibNetDemo is a basic little demo app that allows you to view information related to TSPLIB95 instances in a convenient GUI.
+
 ## Licensing
 
 TSPLib.Net is distributed under the MIT license.
