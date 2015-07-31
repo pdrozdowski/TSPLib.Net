@@ -22,8 +22,9 @@
 namespace TspLibNet.TSP
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 
     /// <summary>
     /// Loads TSP files
@@ -440,7 +441,7 @@ namespace TspLibNet.TSP
                     }
                     else
                     {
-                        array.Add(double.Parse(data[j]));
+                        array.Add(double.Parse(data[j], System.Globalization.NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat));
                     }
                 }
 
