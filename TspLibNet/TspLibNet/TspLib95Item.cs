@@ -89,7 +89,7 @@ namespace TspLibNet
         public override string ToString()
         {
             var builder = new StringBuilder();
-            builder.Append(Problem.GetType());
+            builder.Append(Enum.GetName(typeof(ProblemType), Problem.Type));
             builder.Append(" - ");
             builder.Append(Problem.Name);
             builder.Append(" - ");
