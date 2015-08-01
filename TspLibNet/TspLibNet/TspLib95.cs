@@ -120,11 +120,11 @@ namespace TspLibNet
         /// <returns>A list of all TSPLIB95 problem items.</returns>
         public IEnumerable<TspLib95Item> LoadAll()
         {
-            Items.AddRange(LoadAllTSP());
-            Items.AddRange(LoadAllATSP());
-            Items.AddRange(LoadAllHCP());
-            Items.AddRange(LoadAllSOP());
-            Items.AddRange(LoadAllCVRP());
+            LoadAllTSP();
+            LoadAllATSP();
+            LoadAllHCP();
+            LoadAllSOP();
+            LoadAllCVRP();
             return Items;
         }
 
