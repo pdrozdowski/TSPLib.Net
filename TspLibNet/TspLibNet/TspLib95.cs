@@ -86,9 +86,9 @@ namespace TspLibNet
         /// </summary>
         /// <param name="name"></param>
         /// <returns>The relevant TspLib95Item associated with "name" or a default item if not found</returns>
-        public TspLib95Item GetItemByName(string name)
+        public TspLib95Item GetItemByName(string name, ProblemType type)
         {
-            return Items.Select(i => i).FirstOrDefault(i => i.Problem.Name == name);
+            return Items.Select(i => i).FirstOrDefault(i => i.Problem.Name == name && i.Problem.Type == type);
         }
 
         /// <summary>
