@@ -57,7 +57,7 @@ namespace TspLibNetTests
         {
             var tspLib = new TspLib95(RootDir);
             tspLib.LoadTSP(problemName);
-            var problem = tspLib.GetItemByName(problemName).Problem;
+            var problem = tspLib.GetItemByName(problemName, ProblemType.TSP).Problem;
             var nodes = Enumerable.Range(1, nrNodes);
             var tour = new Tour(problemName, "", nodes.Count(), nodes);
             return problem.TourDistance(tour);

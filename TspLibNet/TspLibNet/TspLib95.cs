@@ -100,9 +100,9 @@ namespace TspLibNet
         /// </summary>
         /// <param name="name"></param>
         /// <returns>The relevant TspLib95Item associated with "name" or a default item if not found</returns>
-        public TspLib95Item GetItemByName(string name)
+        public TspLib95Item GetItemByName(string name, ProblemType type)
         {
-            return Items.Select(i => i).FirstOrDefault(i => i.Problem.Name == name);
+            return Items.Select(i => i).FirstOrDefault(i => i.Problem.Name == name && i.Problem.Type == type);
         }
 
         /// <summary>
@@ -134,11 +134,11 @@ namespace TspLibNet
         /// <returns>A list of all TSPLIB95 problem items.</returns>
         public IEnumerable<TspLib95Item> LoadAll()
         {
-            Items.AddRange(LoadAllTSP());
-            Items.AddRange(LoadAllATSP());
-            Items.AddRange(LoadAllHCP());
-            Items.AddRange(LoadAllSOP());
-            Items.AddRange(LoadAllCVRP());
+            LoadAllTSP();
+            LoadAllATSP();
+            LoadAllHCP();
+            LoadAllSOP();
+            LoadAllCVRP();
             return Items;
         }
 
