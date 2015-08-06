@@ -3,6 +3,10 @@ TSPLib.Net
 
 TSPLib.Net is a C# .Net wrapper library for [TSPLIB](http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/) (a library of sample instances for the TSP and related problems from various sources and of various types collected by Heidelberg university) that provides complete access to all the information provided in TSPLIB95 as at 12 Jan 2014.
 
+### How do I get it?
+
+Install it from [NuGet](https://www.nuget.org/packages/TSPLib.Net/), or download from [releases](https://github.com/goblincoding/TSPLib.Net/releases).
+
 ### TSPLIB95
 
 The TSPLIB95 directory contains data files and best known solutions information for the:
