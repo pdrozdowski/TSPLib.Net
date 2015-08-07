@@ -27,10 +27,6 @@ Each TSPLIB95 instance is wrapped within a TspLib95Item which ultimately provide
 
 IntelliSense should take you the rest of the way, but please see the source if anything is lacking.
 
-### TspLibNetDemo
-
-TspLibNetDemo is a basic little demo app that allows you to view information related to TSPLIB95 instances in a convenient GUI (the demo app lives in a completely separate solution from that of the library itself and therefore doesn't affect library usage or distribution).
-
 ## Licensing
 
 TSPLib.Net is distributed under the MIT license.
