@@ -46,7 +46,7 @@ namespace TspLibNet.TSP
         {
             if (tspFile == null)
             {
-                throw new ArgumentNullException(nameof(tspFile));
+                throw new ArgumentNullException("tspFile");
             }
 
             this.tspFile = tspFile;
@@ -64,7 +64,7 @@ namespace TspLibNet.TSP
             }
             else if (tspFile.NodeCoordinatesType == Defines.NodeCoordinatesType.Coordinates2D)
             {
-                var nodes = new List<INode>();
+                List<INode> nodes = new List<INode>();
                 foreach (object[] data in tspFile.Nodes)
                 {
                     nodes.Add(new Node2D((int)data[0], (double)data[1], (double)data[2]));
@@ -74,7 +74,7 @@ namespace TspLibNet.TSP
             }
             else if (tspFile.NodeCoordinatesType == Defines.NodeCoordinatesType.Coordinates3D)
             {
-                var nodes = new List<INode>();
+                List<INode> nodes = new List<INode>();
                 foreach (object[] data in tspFile.Nodes)
                 {
                     nodes.Add(new Node3D((int)data[0], (double)data[1], (double)data[2], (double)data[3]));
@@ -85,13 +85,11 @@ namespace TspLibNet.TSP
             else throw new NotSupportedException();
         }
 
-
         /// <summary>
         /// Makes an edge provider
         /// </summary>
         /// <param name="nodes">current set of nodes</param>
         /// <returns>edge provider</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Code Notifications", "RECS0083:Shows NotImplementedException throws in the quick task bar", Justification = "<Pending>")]
         public IEdgeProvider MakeEdgeProvider(IEnumerable<INode> nodes)
         {
             if (tspFile.NodeCoordinatesType == Defines.NodeCoordinatesType.Coordinates2D || tspFile.NodeCoordinatesType == Defines.NodeCoordinatesType.Coordinates3D)
@@ -99,17 +97,19 @@ namespace TspLibNet.TSP
                 return new NodeBasedEdgeProvider(nodes);
             }
 
-            switch (tspFile.EdgeDataFormat)
+            if (tspFile.EdgeDataFormat == Defines.EdgeDataFormat.EdgeList)
             {
-                case Defines.EdgeDataFormat.EdgeList:
-                    return new EdgeListBasedEdgeProvider(this.LoadEdges(nodes));
-                case Defines.EdgeDataFormat.AdjacencyList:
-                    throw new NotImplementedException("AdjacencyList is not supported, not used in original set of problems of TSPLIB and so not implemented");
-                case Defines.EdgeDataFormat.Undefined:
-                    return new WeightMatrixBasedEdgeProviderWithExclusions(this.LoadWeightMatrix(), new double[] { });
-                default:
-                    throw new NotSupportedException();
+                return new EdgeListBasedEdgeProvider(this.LoadEdges(nodes));
             }
+            else if (tspFile.EdgeDataFormat == Defines.EdgeDataFormat.AdjacencyList)
+            {
+                throw new NotImplementedException("AdjacencyList is not supported, not used in original set of problems of TSPLIB and so not implemented");
+            }
+            else if (tspFile.EdgeDataFormat == Defines.EdgeDataFormat.Undefined)
+            {
+                return new WeightMatrixBasedEdgeProviderWithExclusions(this.LoadWeightMatrix(), new double[] { });
+            }
+            else throw new NotSupportedException();
         }
 
         /// <summary>
@@ -191,8 +191,8 @@ namespace TspLibNet.TSP
         /// <returns>Nodes that are depots</returns>
         protected List<INode> LoadDepots(IEnumerable<INode> nodes)
         {
-            var graphNodes = new NodesCollection(nodes);
-            var result = new NodesCollection();
+            NodesCollection graphNodes = new NodesCollection(nodes);
+            NodesCollection result = new NodesCollection();
             foreach (int id in tspFile.Depots)
             {
                 result.Add(graphNodes.FindById(id));
@@ -208,8 +208,8 @@ namespace TspLibNet.TSP
         /// <returns>demands for graph nodes</returns>
         protected Dictionary<INode, int> LoadDemands(IEnumerable<INode> nodes)
         {
-            var graphNodes = new NodesCollection(nodes);
-            var result = new Dictionary<INode, int>();
+            NodesCollection graphNodes = new NodesCollection(nodes);
+            Dictionary<INode, int> result = new Dictionary<INode, int>();
             foreach (int[] entry in tspFile.Demands)
             {
                 result.Add(graphNodes.FindById(entry[0]), entry[1]);
@@ -226,8 +226,8 @@ namespace TspLibNet.TSP
         /// <returns>List of edges</returns>
         protected List<IEdge> LoadEdges(IEnumerable<INode> nodes)
         {
-            var graphNodes = new NodesCollection(nodes);
-            var result = new List<IEdge>();
+            NodesCollection graphNodes = new NodesCollection(nodes);
+            List<IEdge> result = new List<IEdge>();
             if (tspFile.Edges != null)
             {
                 foreach (int[] entry in tspFile.Edges)
@@ -252,8 +252,8 @@ namespace TspLibNet.TSP
         /// <returns>List of fixed edges</returns>
         protected List<IEdge> LoadFixedEdges(IEnumerable<INode> nodes)
         {
-            var graphNodes = new NodesCollection(nodes);
-            var result = new List<IEdge>();
+            NodesCollection graphNodes = new NodesCollection(nodes);
+            List<IEdge> result = new List<IEdge>();
             if (tspFile.FixedEdges != null)
             {
                 foreach (int[] entry in tspFile.FixedEdges)
@@ -276,7 +276,7 @@ namespace TspLibNet.TSP
         /// <returns>Edge weight matrix</returns>
         protected double[,] LoadWeightMatrix()
         {
-            var matrixBuilder = new MatrixBuilder();
+            MatrixBuilder matrixBuilder = new MatrixBuilder();
             switch (tspFile.EdgeWeightFormat)
             {
                 case Defines.EdgeWeightFormat.FullMatrix:

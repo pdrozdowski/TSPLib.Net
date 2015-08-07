@@ -40,10 +40,10 @@ using System.Text;
         {
             if (reader == null)
             {
-                throw new ArgumentNullException(nameof(reader));
+                throw new ArgumentNullException("reader");
             }
 
-            var lines = new List<string>();
+            List<string> lines = new List<string>();
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
@@ -54,7 +54,7 @@ using System.Text;
                 }
             }
 
-            var tspFile = new TspFile();
+            TspFile tspFile = new TspFile();
             List<string[]> sections = SplitToSections(lines);
             foreach(string[] section in sections)
             {
@@ -183,9 +183,9 @@ using System.Text;
 
         private List<string[]> SplitToSections(IEnumerable<string> lines)
         {
-            var sections = new List<string[]>();
-            var section = new List<string>();
-            var data = new List<string>(lines);
+            List<string[]> sections = new List<string[]>();
+            List<string> section = new List<string>();
+            List<string> data = new List<string>(lines);
             for (int i = 0; i < data.Count; i++)
             {
                 string line = data[i];
@@ -368,8 +368,8 @@ using System.Text;
 
         private List<int> ReadIntList(string sectionName, string[] lines)
         {
-            var result = new List<int>();
-            var builder = new StringBuilder();
+            List<int> result = new List<int>();
+            StringBuilder builder = new StringBuilder();
             for (int i = 1; i < lines.Length; i++)
             {
                 builder.Append(lines[i]);
@@ -390,8 +390,8 @@ using System.Text;
 
         private List<double> ReadDoubleList(string sectionName, string[] lines)
         {
-            var result = new List<double>();
-            var builder = new StringBuilder();
+            List<double> result = new List<double>();
+            StringBuilder builder = new StringBuilder();
             for (int i = 1; i < lines.Length; i++)
             {
                 builder.Append(lines[i]);
@@ -409,11 +409,11 @@ using System.Text;
 
         private List<int[]> ReadIntsArrayList(string sectionName, string[] lines)
         {
-            var result = new List<int[]>();
-            var builder = new StringBuilder();
+            List<int[]> result = new List<int[]>();
+            StringBuilder builder = new StringBuilder();
             for (int i = 1; i < lines.Length; i++)
             {
-                var array = new List<int>();
+                List<int> array = new List<int>();
                 foreach (string data in lines[i].Split(new[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     array.Add(int.Parse(data));
@@ -427,11 +427,11 @@ using System.Text;
         
         private List<object[]> ReadIntAndDoublesArrayList(string sectionName, string[] lines)
         {
-            var result = new List<object[]>();
-            var builder = new StringBuilder();
+            List<object[]> result = new List<object[]>();
+            StringBuilder builder = new StringBuilder();
             for (int i = 1; i < lines.Length; i++)
             {
-                var array = new List<object>();
+                List<object> array = new List<object>();
                 string[] data = lines[i].Split(new[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
                 for (int j = 0; j < data.Length; j++)
                 {

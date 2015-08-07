@@ -55,22 +55,22 @@ namespace TspLibNet
         {
             if (nodeProvider == null)
             {
-                throw new ArgumentNullException(nameof(nodeProvider));
+                throw new ArgumentNullException("nodeProvider");
             }
 
             if (edgeProvider == null)
             {
-                throw new ArgumentNullException(nameof(edgeProvider));
+                throw new ArgumentNullException("edgeProvider");
             }
 
             if (edgeWeightsProvider == null)
             {
-                throw new ArgumentNullException(nameof(edgeWeightsProvider));
+                throw new ArgumentNullException("edgeWeightsProvider");
             }
 
             if (fixedEdgesProvider == null)
             {
-                throw new ArgumentNullException(nameof(fixedEdgesProvider));
+                throw new ArgumentNullException("fixedEdgesProvider");
             }
 
             Name = name;

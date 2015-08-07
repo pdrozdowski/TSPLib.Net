@@ -38,7 +38,7 @@ namespace TspLibNet.Graph.EdgeWeights
         {
             if (edgeProvider == null)
             {
-                throw new ArgumentNullException(nameof(edgeProvider));
+                throw new ArgumentNullException("edgeProvider");
             }
 
             this.EdgeProvider = edgeProvider;

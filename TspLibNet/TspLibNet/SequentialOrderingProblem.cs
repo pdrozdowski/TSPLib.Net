@@ -94,13 +94,13 @@ namespace TspLibNet
         {
             if (tspFile.Type != FileType.SOP)
             {
-                throw new ArgumentOutOfRangeException(nameof(tspFile));
+                throw new ArgumentOutOfRangeException("tspFile");
             }
 
             double weight = tspFile.EdgeWeights[0];
             tspFile.EdgeWeights.RemoveAt(0);
 
-            var extractor = new TspFileDataExtractor(tspFile);
+            TspFileDataExtractor extractor = new TspFileDataExtractor(tspFile);
             var nodeProvider = extractor.MakeNodeProvider();
             var nodes = nodeProvider.GetNodes();
             var edgeProvider = extractor.MakeEdgeProvider(nodes);

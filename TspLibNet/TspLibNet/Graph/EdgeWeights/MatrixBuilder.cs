@@ -38,7 +38,7 @@ namespace TspLibNet.Graph.EdgeWeights
         {
             int dataIndex = 0;
             double[,] result = new double[dimension, dimension];
-            var input = new List<double>(data);                       
+            List<double> input = new List<double>(data);                       
             for (int x = 0; x < dimension; x++)
             {
                 for (int y = 0; y < dimension; y++)
@@ -59,13 +59,21 @@ namespace TspLibNet.Graph.EdgeWeights
         public double[,] BuildFromUpperRow(IEnumerable<double> data, int dimension)
         {
             int weightsIndex = 0;
-            var weights = new List<double>(data);
+            List<double> weights = new List<double>(data);
             double[,] result = new double[dimension, dimension];
             for (int x = 0; x < dimension; x++)
             {
                 for (int y = x; y < dimension; y++)
                 {
-                    result[x, y] = x == y ? 0 : weights[weightsIndex++];
+                    if (x == y)
+                    {
+                        result[x, y] = 0;
+                    }
+                    else
+                    {
+                        result[x, y] = weights[weightsIndex++];
+                    }
+
                     result[y, x] = result[x, y];
                 }
             }
@@ -82,13 +90,21 @@ namespace TspLibNet.Graph.EdgeWeights
         public double[,] BuildFromLowerRow(IEnumerable<double> data, int dimension)
         {
             int weightsIndex = 0;
-            var weights = new List<double>(data);
+            List<double> weights = new List<double>(data);
             double[,] result = new double[dimension, dimension];
             for (int x = 0; x < dimension; x++)
             {
                 for (int y = 0; y <= x; y++)
-                {
-                    result[x, y] = x == y ? 0 : weights[weightsIndex++];
+                {                
+                    if (x == y)
+                    {
+                        result[x, y] = 0;
+                    }
+                    else
+                    {
+                        result[x, y] = weights[weightsIndex++];
+                    }
+
                     result[y, x] = result[x, y];
                 }
             }
@@ -105,7 +121,7 @@ namespace TspLibNet.Graph.EdgeWeights
         public double[,] BuildFromUpperDiagonalRow(IEnumerable<double> data, int dimension)
         {
             int weightsIndex = 0;
-            var weights = new List<double>(data);
+            List<double> weights = new List<double>(data);
             double[,] result = new double[dimension, dimension];
             for (int x = 0; x < dimension; x++)
             {
@@ -136,7 +152,7 @@ namespace TspLibNet.Graph.EdgeWeights
         public double[,] BuildFromLowerDiagonalRow(IEnumerable<double> data, int dimension)
         {
             int weightsIndex = 0;
-            var weights = new List<double>(data);
+            List<double> weights = new List<double>(data);
             double[,] result = new double[dimension, dimension];
             for (int x = 0; x < dimension; x++)
             {
@@ -167,13 +183,21 @@ namespace TspLibNet.Graph.EdgeWeights
         public double[,] BuildFromUpperColumn(IEnumerable<double> data, int dimension)
         {
             int weightsIndex = 0;
-            var weights = new List<double>(data);
+            List<double> weights = new List<double>(data);
             double[,] result = new double[dimension, dimension];
             for (int y = 0; y < dimension; y++)
             {   
                 for (int x = 0; x <= y; x++)
-                {
-                    result[x, y] = x == y ? 0 : weights[weightsIndex++];
+                {                
+                    if (x == y)
+                    {
+                        result[x, y] = 0;
+                    }
+                    else
+                    {
+                        result[x, y] = weights[weightsIndex++];
+                    }
+
                     result[y, x] = result[x, y];
                 }
             }
@@ -190,13 +214,21 @@ namespace TspLibNet.Graph.EdgeWeights
         public double[,] BuildFromLowerColumn(IEnumerable<double> data, int dimension)
         {
             int weightsIndex = 0;
-            var weights = new List<double>(data);
+            List<double> weights = new List<double>(data);
             double[,] result = new double[dimension, dimension];
             for (int y = 0; y < dimension; y++)
             {
                 for (int x = y; x < dimension; x++)
                 {
-                    result[x, y] = x == y ? 0 : weights[weightsIndex++];
+                    if (x == y)
+                    {
+                        result[x, y] = 0;
+                    }
+                    else
+                    {
+                        result[x, y] = weights[weightsIndex++];
+                    }
+
                     result[y, x] = result[x, y];
                 }
             }
@@ -210,7 +242,7 @@ namespace TspLibNet.Graph.EdgeWeights
         public double[,] BuildFromUpperDiagonalColumn(IEnumerable<double> data, int dimension)
         {
             int weightsIndex = 0;
-            var weights = new List<double>(data);
+            List<double> weights = new List<double>(data);
             double[,] result = new double[dimension, dimension];
             for (int y = 0; y < dimension; y++)
             {
@@ -241,7 +273,7 @@ namespace TspLibNet.Graph.EdgeWeights
         public double[,] BuildFromLowerDiagonalColumn(IEnumerable<double> data, int dimension)
         {
             int weightsIndex = 0;
-            var weights = new List<double>(data);
+            List<double> weights = new List<double>(data);
             double[,] result = new double[dimension, dimension];
             for (int y = 0; y < dimension; y++)
             {

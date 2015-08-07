@@ -37,7 +37,7 @@ namespace TspLibNet.Graph.Nodes
         {
             if (dimension <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(dimension));
+                throw new ArgumentOutOfRangeException("dimension");
             }
 
             this.Nodes = new NodesCollection();

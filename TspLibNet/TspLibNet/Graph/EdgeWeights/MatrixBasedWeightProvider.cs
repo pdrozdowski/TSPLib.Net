@@ -37,12 +37,12 @@ namespace TspLibNet.Graph.EdgeWeights
         {
             if (weights == null)
             {
-                throw new ArgumentNullException(nameof(weights));
+                throw new ArgumentNullException("weights");
             }
 
             if (weights.GetLength(0) != weights.GetLength(1))
             {
-                throw new ArgumentOutOfRangeException(nameof(weights));
+                throw new ArgumentOutOfRangeException("weights");
             }
 
             this.Weights = weights;

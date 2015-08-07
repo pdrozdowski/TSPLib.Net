@@ -112,7 +112,7 @@ namespace TspLibNet
         {
             if (tour == null)
             {
-                throw new ArgumentNullException(nameof(tour));
+                throw new ArgumentNullException("tour");
             }
 
             if (tour.Dimension != tour.Nodes.Count)
@@ -120,7 +120,7 @@ namespace TspLibNet
                 throw new TourInvalidException("Tour dimension does not match number of nodes on a list");
             }
 
-            var identifiers = new HashSet<int>();
+            HashSet<int> identifiers = new HashSet<int>();
             foreach (int nodeId in tour.Nodes)
             {
                 if (identifiers.Contains(nodeId))

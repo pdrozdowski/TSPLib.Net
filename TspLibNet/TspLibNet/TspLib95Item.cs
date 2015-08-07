@@ -47,7 +47,7 @@ namespace TspLibNet
         {
             if (problem == null)
             {
-                throw new ArgumentNullException(nameof(problem));
+                throw new ArgumentNullException("problem");
             }
 
             Problem = problem;
@@ -89,7 +89,7 @@ namespace TspLibNet
         public override string ToString()
         {
             var builder = new StringBuilder();
-            builder.Append(Enum.GetName(typeof(ProblemType), Problem.Type));
+            builder.Append(Problem.GetType());
             builder.Append(" - ");
             builder.Append(Problem.Name);
             builder.Append(" - ");

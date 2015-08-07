@@ -69,7 +69,7 @@ namespace TspLibNet.Graph.Edges
         /// <returns>node with given id or null</returns>
         public EdgesCollection FilterByNode(INode node)
         {
-            var result = new EdgesCollection();
+            EdgesCollection result = new EdgesCollection();
             foreach (IEdge edge in this)
             {
                 if (edge.First.Id == node.Id || edge.Second.Id == node.Id)

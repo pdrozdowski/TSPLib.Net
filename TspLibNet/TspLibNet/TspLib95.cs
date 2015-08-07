@@ -98,8 +98,7 @@ namespace TspLibNet
 
         /// <summary>
         /// </summary>
-        /// <param name="name">The problem name (file name excluding extension)</param>
-        /// <param name="type">Problem type - TSP, ATSP, SOP, HCP, CVRP</param>
+        /// <param name="name"></param>
         /// <returns>The relevant TspLib95Item associated with "name" or a default item if not found</returns>
         public TspLib95Item GetItemByName(string name, ProblemType type)
         {
@@ -114,12 +113,7 @@ namespace TspLibNet
         {
             if (string.IsNullOrWhiteSpace(tspLib95Path))
             {
-                throw new ArgumentNullException(nameof(tspLib95Path));
-            }
-
-            if (!Directory.Exists(tspLib95Path))
-            {
-                throw new ArgumentException("Path does not exist: " + tspLib95Path);
+                throw new ArgumentNullException("tspLib95Path");
             }
 
             _tspLib95Path = tspLib95Path;
@@ -232,7 +226,7 @@ namespace TspLibNet
         public void LoadSOP(string name)
         {
             // do not load best solution, lack of support at the moment
-            ProblemLoader(name, "SequentialOrderingProblem", ".sop", "SOP", "broken.txt", ".opt.tour");
+            ProblemLoader(name, "SequentialOrderingProblem", ".sop", "SOP", "????.txt", ".opt.tour");
         }
 
         /// <summary>
@@ -263,7 +257,7 @@ namespace TspLibNet
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentNullException("name");
             }
 
             name = name.Replace(extension, "");
@@ -311,7 +305,7 @@ namespace TspLibNet
                     return HamiltonianCycleProblem.FromFile(filename);
             }
 
-            throw new ArgumentOutOfRangeException(nameof(type));
+            throw new ArgumentOutOfRangeException("type");
         }
 
         /// <summary>

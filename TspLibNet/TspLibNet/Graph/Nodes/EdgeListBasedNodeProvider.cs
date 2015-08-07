@@ -38,11 +38,11 @@ namespace TspLibNet.Graph.Nodes
         {
             if (edges == null)
             {
-                throw new ArgumentNullException(nameof(edges));
+                throw new ArgumentNullException("matrix");
             }
 
             this.Nodes = new NodesCollection();
-            var nodesToCreate = new HashSet<int>();
+            HashSet<int> nodesToCreate = new HashSet<int>();
             foreach (IEdge edge in edges)
             {
                 if (!nodesToCreate.Contains(edge.First.Id))
