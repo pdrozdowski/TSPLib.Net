@@ -282,21 +282,17 @@ namespace TspLibNet.TSP
                 case Defines.EdgeWeightFormat.FullMatrix:
                     return matrixBuilder.BuildFromFullMatrix(tspFile.EdgeWeights, tspFile.Dimension);
                 case Defines.EdgeWeightFormat.UpperRow:
+                case Defines.EdgeWeightFormat.LowerColumn:
                     return matrixBuilder.BuildFromUpperRow(tspFile.EdgeWeights, tspFile.Dimension);
                 case Defines.EdgeWeightFormat.LowerRow:
+                case Defines.EdgeWeightFormat.UpperColumn:
                     return matrixBuilder.BuildFromLowerRow(tspFile.EdgeWeights, tspFile.Dimension);
                 case Defines.EdgeWeightFormat.UpperDiagonalRow:
+                case Defines.EdgeWeightFormat.LowerDiagonalColumn:
                     return matrixBuilder.BuildFromUpperDiagonalRow(tspFile.EdgeWeights, tspFile.Dimension);
                 case Defines.EdgeWeightFormat.LowerDiagonalRow:
-                    return matrixBuilder.BuildFromLowerDiagonalRow(tspFile.EdgeWeights, tspFile.Dimension);
-                case Defines.EdgeWeightFormat.UpperColumn:
-                    return matrixBuilder.BuildFromUpperColumn(tspFile.EdgeWeights, tspFile.Dimension);
-                case Defines.EdgeWeightFormat.LowerColumn:
-                    return matrixBuilder.BuildFromLowerColumn(tspFile.EdgeWeights, tspFile.Dimension);
                 case Defines.EdgeWeightFormat.UpperDiagonalColumn:
-                    return matrixBuilder.BuildFromUpperDiagonalColumn(tspFile.EdgeWeights, tspFile.Dimension);
-                case Defines.EdgeWeightFormat.LowerDiagonalColumn:
-                    return matrixBuilder.BuildFromLowerDiagonalColumn(tspFile.EdgeWeights, tspFile.Dimension);
+                    return matrixBuilder.BuildFromLowerDiagonalRow(tspFile.EdgeWeights, tspFile.Dimension);                
                 default:
                     throw new NotSupportedException();
             }

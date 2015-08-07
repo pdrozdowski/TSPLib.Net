@@ -39,6 +39,11 @@ namespace TspLibNet.Tours
         /// <param name="nodes">tour nodes</param>
         public Tour(string name, string comment, int dimension, IEnumerable<int> nodes)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException("name");
+            }
+
             if (dimension < 0)
             {
                 throw new ArgumentOutOfRangeException("dimension");
