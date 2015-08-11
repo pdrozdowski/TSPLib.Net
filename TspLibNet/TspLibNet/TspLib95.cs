@@ -98,7 +98,8 @@ namespace TspLibNet
 
         /// <summary>
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">The name of the file containing the specific problem instance, excluding the file extension</param>
+        /// <param name="type">The specific problem type</param>
         /// <returns>The relevant TspLib95Item associated with "name" or a default item if not found</returns>
         public TspLib95Item GetItemByName(string name, ProblemType type)
         {

@@ -1,17 +1,17 @@
 ﻿/* The MIT License (MIT)
 *
 * Copyright (c) 2014 Pawel Drozdowski
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy of
 * this software and associated documentation files (the "Software"), to deal in
 * the Software without restriction, including without limitation the rights to
 * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 * the Software, and to permit persons to whom the Software is furnished to do so,
 * subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
 * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
@@ -19,17 +19,18 @@
 * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
 namespace TspLibNet.TSP
 {
     using System;
     using System.Collections.Generic;
     using TspLibNet.DistanceFunctions;
-    using TspLibNet.Graph.Nodes;
+    using TspLibNet.Graph.Demand;
+    using TspLibNet.Graph.Depots;
     using TspLibNet.Graph.Edges;
     using TspLibNet.Graph.EdgeWeights;
     using TspLibNet.Graph.FixedEdges;
-    using TspLibNet.Graph.Depots;
-    using TspLibNet.Graph.Demand;
+    using TspLibNet.Graph.Nodes;
 
     /// <summary>
     /// Builds graph from TSP data file
@@ -221,7 +222,6 @@ namespace TspLibNet.TSP
         /// <summary>
         /// Build edges given in tsp file
         /// </summary>
-        /// <param name="tspFile">tsp file data</param>
         /// <param name="nodes">graph nodes</param>
         /// <returns>List of edges</returns>
         protected List<IEdge> LoadEdges(IEnumerable<INode> nodes)
@@ -247,7 +247,6 @@ namespace TspLibNet.TSP
         /// <summary>
         /// Build fixed edges given in tsp file
         /// </summary>
-        /// <param name="tspFile">tsp file data</param>
         /// <param name="nodes">graph nodes</param>
         /// <returns>List of fixed edges</returns>
         protected List<IEdge> LoadFixedEdges(IEnumerable<INode> nodes)
@@ -281,18 +280,23 @@ namespace TspLibNet.TSP
             {
                 case Defines.EdgeWeightFormat.FullMatrix:
                     return matrixBuilder.BuildFromFullMatrix(tspFile.EdgeWeights, tspFile.Dimension);
+
                 case Defines.EdgeWeightFormat.UpperRow:
                 case Defines.EdgeWeightFormat.LowerColumn:
                     return matrixBuilder.BuildFromUpperRow(tspFile.EdgeWeights, tspFile.Dimension);
+
                 case Defines.EdgeWeightFormat.LowerRow:
                 case Defines.EdgeWeightFormat.UpperColumn:
                     return matrixBuilder.BuildFromLowerRow(tspFile.EdgeWeights, tspFile.Dimension);
+
                 case Defines.EdgeWeightFormat.UpperDiagonalRow:
                 case Defines.EdgeWeightFormat.LowerDiagonalColumn:
                     return matrixBuilder.BuildFromUpperDiagonalRow(tspFile.EdgeWeights, tspFile.Dimension);
+
                 case Defines.EdgeWeightFormat.LowerDiagonalRow:
                 case Defines.EdgeWeightFormat.UpperDiagonalColumn:
-                    return matrixBuilder.BuildFromLowerDiagonalRow(tspFile.EdgeWeights, tspFile.Dimension);                
+                    return matrixBuilder.BuildFromLowerDiagonalRow(tspFile.EdgeWeights, tspFile.Dimension);
+
                 default:
                     throw new NotSupportedException();
             }
@@ -302,25 +306,31 @@ namespace TspLibNet.TSP
         /// Loads distance function
         /// </summary>
         /// <returns>Loaded distance function</returns>
-        protected IDistanceFunction LoadDistanceFunction() 
+        protected IDistanceFunction LoadDistanceFunction()
         {
             switch (tspFile.EdgeWeightType)
             {
                 case Defines.EdgeWeightType.Euclidean2D:
                 case Defines.EdgeWeightType.Euclidean3D:
                     return new Euclidean();
+
                 case Defines.EdgeWeightType.EuclideanCeiled2D:
                     return new EuclideanCeiled();
+
                 case Defines.EdgeWeightType.Manhattan2D:
                 case Defines.EdgeWeightType.Manhattan3D:
                     return new Manhattan();
+
                 case Defines.EdgeWeightType.Maximum2D:
                 case Defines.EdgeWeightType.Maximum3D:
                     return new Maximum();
+
                 case Defines.EdgeWeightType.Geographical:
                     return new Geographical();
+
                 case Defines.EdgeWeightType.PseudoEuclidean:
                     return new PseudoEuclidean();
+
                 default:
                     throw new NotSupportedException();
             }
@@ -343,6 +353,6 @@ namespace TspLibNet.TSP
             }
 
             return 0;
-        }       
+        }
     }
 }
