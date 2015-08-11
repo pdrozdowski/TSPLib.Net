@@ -264,21 +264,33 @@ namespace TspLibNet
             name = name.Replace(extension, "");
             var instancesDir = Path.Combine(_tspLib95Path, dir);
             var instancePattern = name + extension;
-            var solutions = LoadBestSolutionsFile(Path.Combine(instancesDir, solutionsFile));
-
-            foreach (var file in Directory.GetFiles(instancesDir, instancePattern))
+            foreach (var fileName in Directory.GetFiles(instancesDir, instancePattern))
             {
-                var problem = FactorizeProblem(file, type);
+                // Skip optimal tour files.
+                if (fileName.Contains(optTourExtension))
+                {
+                    continue;
+                }
+
+                // Load the problem.
+                var problem = FactorizeProblem(fileName, type);
+
+                // Load the optimal tour if we have one.
                 ITour tour = null;
-                var tourName = file.Replace(extension, optTourExtension);
+                var tourName = fileName.Replace(extension, optTourExtension);
                 if (File.Exists(tourName))
                 {
                     tour = Tour.FromFile(tourName);
                 }
 
+                // Load the best known solution.
                 var distance = double.MaxValue;
+                var solutions = LoadBestSolutionsFile(Path.Combine(instancesDir, solutionsFile));
                 if (solutions.ContainsKey(problem.Name))
+                {
                     distance = solutions[problem.Name];
+                }
+
                 Items.Add(new TspLib95Item(problem, tour, distance));
             }
         }
