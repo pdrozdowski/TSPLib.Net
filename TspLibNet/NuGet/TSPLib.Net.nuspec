@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>TSPLib.Net</id>
-        <version>1.1.0</version>
+        <version>1.1.1</version>
         <authors>Pawel Drozdowski,William Hallatt</authors>
         <owners>Pawel Drozdowski,William Hallatt</owners>
         <licenseUrl>https://github.com/goblincoding/TSPLib.Net/blob/master/LICENSE</licenseUrl>
@@ -10,7 +10,7 @@
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
         <description>TSPLib.Net is a C# .Net wrapper library for TSPLIB (http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95, a library of sample instances for the TSP and related problems from various sources and of various types collected by Heidelberg university) that provides complete access to all the information provided in TSPLIB95 as at 12 Jan 2014.</description>
         <summary>TSPLib.Net is a C# .Net wrapper library for TSPLIB (http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95)</summary>
-        <releaseNotes>Extended IProblem interface in order to provide access to Graph information.</releaseNotes>
+        <releaseNotes>Fixed bug where optimal tour files were loaded as TSP problem instances.</releaseNotes>
         <copyright />
         <language>en-US</language>
         <tags>TSP, traveling salesman problem</tags>
