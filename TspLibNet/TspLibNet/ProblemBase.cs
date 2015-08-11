@@ -83,39 +83,39 @@ namespace TspLibNet
         }
 
         /// <summary>
-        /// Gets nodes provider
-        /// </summary>
-        public INodeProvider NodeProvider { get; protected set; }
-
-        /// <summary>
-        /// Gets Edges provider
-        /// </summary>
-        public IEdgeProvider EdgeProvider { get; protected set; }
-
-        /// <summary>
-        /// Gets Edge Weights Provider
-        /// </summary>
-        public IEdgeWeightsProvider EdgeWeightsProvider { get; protected set; }
-
-        /// <summary>
-        /// Gets Fixed Edges Provider
-        /// </summary>
-        public IFixedEdgesProvider FixedEdgesProvider { get; protected set; }
-
-        /// <summary>
         /// Represents the problem type (TSP, ATSP, etc).
         /// </summary>
-        public ProblemType Type { get; protected set; }
+        public ProblemType Type { get; }
 
         /// <summary>
         /// Gets file name - Identifies the data file.
         /// </summary>
-        public string Name { get; protected set; }
+        public string Name { get; }
 
         /// <summary>
         /// Gets file comment - additional comments from problem author
         /// </summary>
-        public string Comment { get; protected set; }
+        public string Comment { get; }
+
+        /// <summary>
+        /// Gets nodes provider
+        /// </summary>
+        public INodeProvider NodeProvider { get; }
+
+        /// <summary>
+        /// Gets Edges provider
+        /// </summary>
+        public IEdgeProvider EdgeProvider { get; }
+
+        /// <summary>
+        /// Gets Edge Weights Provider
+        /// </summary>
+        public IEdgeWeightsProvider EdgeWeightsProvider { get; }
+
+        /// <summary>
+        /// Gets Fixed Edges Provider
+        /// </summary>
+        public IFixedEdgesProvider FixedEdgesProvider { get; }
 
         /// <summary>
         /// Gets tour distance for a given problem
