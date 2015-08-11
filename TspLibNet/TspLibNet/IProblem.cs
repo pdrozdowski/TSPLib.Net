@@ -25,12 +25,24 @@ namespace TspLibNet
 {
     using Tours;
 
+    /// <summary>
+    /// Represents possible TSPLIB problem types.
+    /// </summary>
     public enum ProblemType
     {
+        /// <summary> Symmetric TSP </summary>
         TSP,
+
+        /// <summary> Aymmetric TSP </summary>
         ATSP,
+
+        /// <summary> Hamiltonian Cycle Problem </summary>
         HCP,
+
+        /// <summary> Sequential Ordering Problem </summary>
         SOP,
+
+        /// <summary> Capacitated Vehicle Routing Problem </summary>
         CVRP
     }
 

@@ -47,6 +47,10 @@ namespace TspLibNet.DistanceFunctions
             return t < r ? t + 1 : t;
         }
 
+        /// <summary>
+        /// No distance implementation possible for PseudoEuclidean in 3D
+        /// </summary>
+        /// <exception cref="NotSupportedException">Not supported</exception>
         protected override double Distance(Node3D a, Node3D b)
         {
             throw new NotSupportedException("No distance implementation possible for PseudoEuclidean in 3D");
