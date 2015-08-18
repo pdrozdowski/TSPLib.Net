@@ -128,6 +128,7 @@ namespace TspLibNet
         /// Load ALL TSPLIB95 problem instances.
         /// </summary>
         /// <returns>A list of all TSPLIB95 problem items.</returns>
+        /// <exception cref="DirectoryNotFoundException">Thrown if TSP lib path (<seealso cref="TspLib95"/>) does not point to TSPLIB95.</exception>
         public IEnumerable<TspLib95Item> LoadAll()
         {
             LoadAllTSP();
@@ -142,6 +143,7 @@ namespace TspLibNet
         /// Load only TSP problems
         /// </summary>
         /// <returns>A list of all TSP lib problem items.</returns>
+        /// <exception cref="DirectoryNotFoundException">Thrown if TSP lib path (<seealso cref="TspLib95"/>) does not point to TSPLIB95.</exception>
         public IEnumerable<TspLib95Item> LoadAllTSP()
         {
             LoadTSP("*");
@@ -152,6 +154,7 @@ namespace TspLibNet
         /// Load only ATSP problems
         /// </summary>
         /// <returns>A list of all ATSP lib problem items.</returns>
+        /// <exception cref="DirectoryNotFoundException">Thrown if TSP lib path (<seealso cref="TspLib95"/>) does not point to TSPLIB95.</exception>
         public IEnumerable<TspLib95Item> LoadAllATSP()
         {
             LoadATSP("*");
@@ -162,6 +165,7 @@ namespace TspLibNet
         /// Load only HCP problems
         /// </summary>
         /// <returns>A list of all HPC lib problem items.</returns>
+        /// <exception cref="DirectoryNotFoundException">Thrown if TSP lib path (<seealso cref="TspLib95"/>) does not point to TSPLIB95.</exception>
         public IEnumerable<TspLib95Item> LoadAllHCP()
         {
             LoadHCP("*");
@@ -172,6 +176,7 @@ namespace TspLibNet
         /// Load only SOP problems
         /// </summary>
         /// <returns>A list of all SOP lib problem items.</returns>
+        /// <exception cref="DirectoryNotFoundException">Thrown if TSP lib path (<seealso cref="TspLib95"/>) does not point to TSPLIB95.</exception>
         public IEnumerable<TspLib95Item> LoadAllSOP()
         {
             LoadSOP("*");
@@ -182,6 +187,7 @@ namespace TspLibNet
         /// Load only VRP problems
         /// </summary>
         /// <returns>A list of all CVRP lib problem items.</returns>
+        /// <exception cref="DirectoryNotFoundException">Thrown if TSP lib path (<seealso cref="TspLib95"/>) does not point to TSPLIB95.</exception>
         public IEnumerable<TspLib95Item> LoadAllCVRP()
         {
             LoadCVRP("*");
@@ -193,6 +199,8 @@ namespace TspLibNet
         /// </summary>
         /// <param name="name">Problem name</param>
         /// <seealso cref="GetItemByName"/>
+        /// <exception cref="ArgumentNullException">Thrown if "name" argument is null or empty.</exception>
+        /// <exception cref="DirectoryNotFoundException">Thrown if TSP lib path (<seealso cref="TspLib95"/>) does not point to TSPLIB95.</exception>
         public void LoadTSP(string name)
         {
             ProblemLoader(name, "TravelingSalesmanProblem", ".tsp", "TSP", "bestSolutions.txt", ".opt.tour");
@@ -203,6 +211,8 @@ namespace TspLibNet
         /// </summary>
         /// <param name="name">Problem name</param>
         /// <seealso cref="GetItemByName"/>
+        /// <exception cref="ArgumentNullException">Thrown if "name" argument is null or empty.</exception>
+        /// <exception cref="DirectoryNotFoundException">Thrown if TSP lib path (<seealso cref="TspLib95"/>) does not point to TSPLIB95.</exception>
         public void LoadATSP(string name)
         {
             ProblemLoader(name, "TravelingSalesmanProblem", ".atsp", "ATSP", "bestSolutions.txt", ".opt.tour");
@@ -213,6 +223,8 @@ namespace TspLibNet
         /// </summary>
         /// <param name="name">Problem name</param>
         /// <seealso cref="GetItemByName"/>
+        /// <exception cref="ArgumentNullException">Thrown if "name" argument is null or empty.</exception>
+        /// <exception cref="DirectoryNotFoundException">Thrown if TSP lib path (<seealso cref="TspLib95"/>) does not point to TSPLIB95.</exception>
         public void LoadHCP(string name)
         {
             ProblemLoader(name, "HamiltonianCycleProblem", ".hcp", "HCP", "bestSolutions.txt", ".opt.tour");
@@ -223,6 +235,8 @@ namespace TspLibNet
         /// </summary>
         /// <param name="name">Problem name</param>
         /// <seealso cref="GetItemByName"/>
+        /// <exception cref="ArgumentNullException">Thrown if "name" argument is null or empty.</exception>
+        /// <exception cref="DirectoryNotFoundException">Thrown if TSP lib path (<seealso cref="TspLib95"/>) does not point to TSPLIB95.</exception>
         public void LoadSOP(string name)
         {
             // do not load best solution, lack of support at the moment
@@ -234,6 +248,8 @@ namespace TspLibNet
         /// </summary>
         /// <param name="name">Problem name</param>
         /// <seealso cref="GetItemByName"/>
+        /// <exception cref="ArgumentNullException">Thrown if "name" argument is null or empty.</exception>
+        /// <exception cref="DirectoryNotFoundException">Thrown if TSP lib path (<seealso cref="TspLib95"/>) does not point to TSPLIB95.</exception>
         public void LoadCVRP(string name)
         {
             ProblemLoader(name, "CapacitatedVehicleRoutingProblem", ".vrp", "VRP", "bestSolutions.txt", ".opt.tour");
@@ -249,6 +265,8 @@ namespace TspLibNet
         /// <param name="solutionsFile">name of file with opt distances</param>
         /// <param name="optTourExtension">extension for files with opt tours</param>
         /// <returns>A list of the TspLib95Items loaded</returns>
+        /// <exception cref="ArgumentNullException">Thrown if "name" argument is null or empty.</exception>
+        /// <exception cref="DirectoryNotFoundException">Thrown if TSP lib path (<seealso cref="TspLib95"/>) does not point to TSPLIB95.</exception>
         private void ProblemLoader(string name,
                                    string type,
                                    string extension,
@@ -263,6 +281,12 @@ namespace TspLibNet
 
             name = name.Replace(extension, "");
             var instancesDir = Path.Combine(_tspLib95Path, dir);
+
+            if (!Directory.Exists(instancesDir))
+            {
+                throw new DirectoryNotFoundException();
+            }
+
             var instancePattern = name + extension;
             var solutions = LoadBestSolutionsFile(Path.Combine(instancesDir, solutionsFile));
 
@@ -289,6 +313,7 @@ namespace TspLibNet
         /// <param name="filename">name of file with problem</param>
         /// <param name="type">type of problem class</param>
         /// <returns>Problem loaded from the file</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when "type" is unknown.</exception>
         private static IProblem FactorizeProblem(string filename, string type)
         {
             switch (type)
