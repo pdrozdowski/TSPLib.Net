@@ -99,7 +99,7 @@ namespace TspLibNet
         /// </summary>
         /// <param name="tspLib95Path">TSPLIB95 data library root directory path</param>
         /// <exception cref="ArgumentNullException">Thrown if directory path name is null or empty</exception>
-        /// <exception cref="ArgumentException">Thrown if directory does not exist</exception>
+        /// <exception cref="DirectoryNotFoundException">Thrown if directory does not exist</exception>
         public TspLib95(string tspLib95Path)
         {
             if (string.IsNullOrWhiteSpace(tspLib95Path))
