@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
 using System.Linq;
 using TspLibNet;
 
@@ -25,10 +26,10 @@ namespace TspLibNetTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(DirectoryNotFoundException))]
         public void TspLibPathInvalidDirectory()
         {
-            var tspLib = new TspLib95("C:\blah\broken");
+            var tspLib = new TspLib95("broken");
         }
 
         [TestMethod]

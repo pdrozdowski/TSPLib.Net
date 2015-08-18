@@ -109,7 +109,7 @@ namespace TspLibNet
 
             if (!Directory.Exists(tspLib95Path))
             {
-                throw new ArgumentException("The directory does not exist", "tspLib95Path");
+                throw new DirectoryNotFoundException();
             }
 
             _tspLib95Path = tspLib95Path;
