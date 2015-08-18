@@ -11,6 +11,39 @@ namespace TspLibNetTests
         private const string RootDir = @"..\..\..\..\TSPLIB95";
 
         [TestMethod]
+        public void TspLibPathValid()
+        {
+            var tspLib = new TspLib95(RootDir);
+            Assert.IsNotNull(tspLib);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TspLibPathEmpty()
+        {
+            var tspLib = new TspLib95("");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TspLibPathInvalidDirectory()
+        {
+            var tspLib = new TspLib95("C:\blah\broken");
+        }
+
+        [TestMethod]
+        public void LoadNone()
+        {
+            var tspLib = new TspLib95(RootDir);
+            Assert.IsFalse(tspLib.Items.Any());
+            Assert.IsFalse(tspLib.ATSPItems().Any());
+            Assert.IsFalse(tspLib.TSPItems().Any());
+            Assert.IsFalse(tspLib.SOPItems().Any());
+            Assert.IsFalse(tspLib.HCPItems().Any());
+            Assert.IsFalse(tspLib.CVRPItems().Any());
+        }
+
+        [TestMethod]
         public void LoadAllTSP()
         {
             var tspLib = new TspLib95(RootDir);
@@ -53,6 +86,16 @@ namespace TspLibNetTests
             tspLib.LoadAllCVRP();
             var items = tspLib.CVRPItems();
             Assert.AreEqual(Enumerable.Count(items), 16);
+        }
+
+        [TestMethod]
+        public void GetItemByInvalidName()
+        {
+            var tspLib = new TspLib95(RootDir);
+            tspLib.LoadAllTSP();
+            Assert.IsNull(tspLib.GetItemByName("bob", ProblemType.TSP));
+            Assert.IsNull(tspLib.GetItemByName("", ProblemType.TSP));
+            Assert.IsNull(tspLib.GetItemByName(" ", ProblemType.TSP));
         }
     }
 }

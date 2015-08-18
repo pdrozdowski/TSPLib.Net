@@ -51,46 +51,34 @@ namespace TspLibNet
         // The path to the TSPLIB95 data library.
         private readonly string _tspLib95Path;
 
-        /// <summary>
-        /// Gets ALL TSPLIB95 items.
-        /// </summary>
+        /// <returns>ALL loaded TSPLIB95 items or an empty list if no items have been loaded.</returns>
         public List<TspLib95Item> Items { get; private set; }
 
-        /// <summary>
-        /// Gets all symmetric TSP items.
-        /// </summary>
+        /// <returns>All symmetric TSP problem items or an empty list if no STSP items have been loaded.</returns>
         public IEnumerable<TspLib95Item> TSPItems()
         {
             return Items.Where(i => i.Problem.Type == ProblemType.TSP);
         }
 
-        /// <summary>
-        /// Gets all ATSP items.
-        /// </summary>
+        /// <returns>All asymmetric TSP problem items or an empty list if no ATSP items have been loaded.</returns>
         public IEnumerable<TspLib95Item> ATSPItems()
         {
             return Items.Where(i => i.Problem.Type == ProblemType.ATSP);
         }
 
-        /// <summary>
-        /// Gets all HCP items.
-        /// </summary>
+        /// <returns>All HCP problem items or an empty list if no HCP items have been loaded.</returns>
         public IEnumerable<TspLib95Item> HCPItems()
         {
             return Items.Where(i => i.Problem.Type == ProblemType.HCP);
         }
 
-        /// <summary>
-        /// Gets all SOP items.
-        /// </summary>
+        /// <returns>All SOP problem items or an empty list if no SOP items have been loaded.</returns>
         public IEnumerable<TspLib95Item> SOPItems()
         {
             return Items.Where(i => i.Problem.Type == ProblemType.SOP);
         }
 
-        /// <summary>
-        /// Gets all CVRP items.
-        /// </summary>
+        /// <returns>All CVRP problem items or an empty list if no CVRP items have been loaded.</returns>
         public IEnumerable<TspLib95Item> CVRPItems()
         {
             return Items.Where(i => i.Problem.Type == ProblemType.CVRP);
@@ -99,7 +87,7 @@ namespace TspLibNet
         /// <summary>
         /// </summary>
         /// <param name="name">The name of the file containing the specific problem instance, excluding the file extension</param>
-        /// <param name="type">The specific problem type</param>
+        /// <param name="type">The specific problem type (TSP, ATSP, etc)</param>
         /// <returns>The relevant TspLib95Item associated with "name" or a default item if not found</returns>
         public TspLib95Item GetItemByName(string name, ProblemType type)
         {
@@ -109,12 +97,19 @@ namespace TspLibNet
         /// <summary>
         /// Creates a new instance of the TspLib95 class.
         /// </summary>
-        /// <param name="tspLib95Path">TSPLIB95 data library root path</param>
+        /// <param name="tspLib95Path">TSPLIB95 data library root directory path</param>
+        /// <exception cref="ArgumentNullException">Thrown if directory path name is null or empty</exception>
+        /// <exception cref="ArgumentException">Thrown if directory does not exist</exception>
         public TspLib95(string tspLib95Path)
         {
             if (string.IsNullOrWhiteSpace(tspLib95Path))
             {
                 throw new ArgumentNullException("tspLib95Path");
+            }
+
+            if (!Directory.Exists(tspLib95Path))
+            {
+                throw new ArgumentException("The directory does not exist", "tspLib95Path");
             }
 
             _tspLib95Path = tspLib95Path;
@@ -194,36 +189,40 @@ namespace TspLibNet
         }
 
         /// <summary>
-        /// Load TSP problem with a given name
+        /// Loads the TSP problem with the given name
         /// </summary>
         /// <param name="name">Problem name</param>
+        /// <seealso cref="GetItemByName"/>
         public void LoadTSP(string name)
         {
             ProblemLoader(name, "TravelingSalesmanProblem", ".tsp", "TSP", "bestSolutions.txt", ".opt.tour");
         }
 
         /// <summary>
-        /// Load ATSP problem with a given name
+        /// Loads the ATSP problem with the given name
         /// </summary>
         /// <param name="name">Problem name</param>
+        /// <seealso cref="GetItemByName"/>
         public void LoadATSP(string name)
         {
             ProblemLoader(name, "TravelingSalesmanProblem", ".atsp", "ATSP", "bestSolutions.txt", ".opt.tour");
         }
 
         /// <summary>
-        /// Load HCP problem with a given name
+        /// Loads the HCP problem with the given name
         /// </summary>
         /// <param name="name">Problem name</param>
+        /// <seealso cref="GetItemByName"/>
         public void LoadHCP(string name)
         {
             ProblemLoader(name, "HamiltonianCycleProblem", ".hcp", "HCP", "bestSolutions.txt", ".opt.tour");
         }
 
         /// <summary>
-        /// Load SOP problem with a given name
+        /// Loads the SOP problem with the given name
         /// </summary>
         /// <param name="name">Problem name</param>
+        /// <seealso cref="GetItemByName"/>
         public void LoadSOP(string name)
         {
             // do not load best solution, lack of support at the moment
@@ -231,9 +230,10 @@ namespace TspLibNet
         }
 
         /// <summary>
-        /// Load VRP problem with a given name
+        /// Loads the VRP problem with the given name
         /// </summary>
         /// <param name="name">Problem name</param>
+        /// <seealso cref="GetItemByName"/>
         public void LoadCVRP(string name)
         {
             ProblemLoader(name, "CapacitatedVehicleRoutingProblem", ".vrp", "VRP", "bestSolutions.txt", ".opt.tour");
