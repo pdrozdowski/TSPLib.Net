@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>TSPLib.Net</id>
-        <version>1.1.2</version>
+        <version>1.1.3</version>
         <authors>Pawel Drozdowski,William Hallatt</authors>
         <owners>Pawel Drozdowski,William Hallatt</owners>
         <licenseUrl>https://github.com/goblincoding/TSPLib.Net/blob/master/LICENSE</licenseUrl>
@@ -10,7 +10,7 @@
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
         <description>TSPLib.Net is a C# .Net wrapper library for TSPLIB (http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95, a library of sample instances for the TSP and related problems from various sources and of various types collected by Heidelberg university) that provides complete access to all the information provided in TSPLIB95 as at 12 Jan 2014.</description>
         <summary>TSPLib.Net is a C# .Net wrapper library for TSPLIB (http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95)</summary>
-        <releaseNotes>Improved package layout.  TSPLIB95 directory now exists at the same level as "lib" (this furthermore addresses the NuGet Package Explorer's warning regarding directory structure).</releaseNotes>
+        <releaseNotes>Improved TspLib95 class documentation.</releaseNotes>
         <copyright />
         <language>en-US</language>
         <tags>TSP, traveling salesman problem</tags>
