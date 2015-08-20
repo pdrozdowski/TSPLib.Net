@@ -45,6 +45,22 @@ namespace TspLibNetTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(DirectoryNotFoundException))]
+        public void LoadWrongTspDir()
+        {
+            var tspLib = new TspLib95(Directory.GetCurrentDirectory());
+            tspLib.LoadAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void LoadByNameNullDir()
+        {
+            var tspLib = new TspLib95(RootDir);
+            tspLib.LoadTSP("");
+        }
+
+        [TestMethod]
         public void LoadAllTSP()
         {
             var tspLib = new TspLib95(RootDir);
