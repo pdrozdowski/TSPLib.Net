@@ -194,6 +194,7 @@ namespace TspLibNetTests
             AssertTourDistance(FileType.TSP, "tsp/gr96.tsp", "tsp/gr96.opt.tour", 55209);
             AssertTourDistance(FileType.TSP, "tsp/gr202.tsp", "tsp/gr202.opt.tour", 40160);
             AssertTourDistance(FileType.TSP, "tsp/gr666.tsp", "tsp/gr666.opt.tour", 294358);
+            AssertTourDistance(FileType.TSP, "tsp/pla33810.tsp", "tsp/pla33810.opt.tour", 66048945);
         }
 
         [TestMethod]
