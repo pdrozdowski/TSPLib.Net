@@ -41,7 +41,7 @@ namespace TspLibNet.DistanceFunctions
         {
             var xd = a.X - b.X;
             var yd = a.Y - b.Y;
-            return Math.Ceiling(xd * xd + yd * yd);
+            return Math.Ceiling(Math.Sqrt(xd * xd + yd * yd));
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace TspLibNet.DistanceFunctions
             var xd = a.X - b.X;
             var yd = a.Y - b.Y;
             var zd = a.Z - b.Z;
-            return Math.Ceiling(xd * xd + yd * yd + zd * zd);
+            return Math.Ceiling(Math.Sqrt(xd * xd + yd * yd + zd * zd));
         }
     }
 }
