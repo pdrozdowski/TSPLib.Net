@@ -2,15 +2,15 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>TSPLib.Net</id>
-        <version>1.1.4</version>
+        <version>1.1.5</version>
         <authors>Pawel Drozdowski,William Hallatt</authors>
         <owners>Pawel Drozdowski,William Hallatt</owners>
-        <licenseUrl>https://github.com/goblincoding/TSPLib.Net/blob/master/LICENSE</licenseUrl>
-        <projectUrl>https://github.com/goblincoding/TSPLib.Net</projectUrl>
+        <licenseUrl>https://github.com/pdrozdowski/TSPLib.Net/blob/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/pdrozdowski/TSPLib.Net</projectUrl>
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
         <description>TSPLib.Net is a C# .Net wrapper library for TSPLIB (http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95, a library of sample instances for the TSP and related problems from various sources and of various types collected by Heidelberg university) that provides complete access to all the information provided in TSPLIB95 as at 12 Jan 2014.</description>
         <summary>TSPLib.Net is a C# .Net wrapper library for TSPLIB (http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95)</summary>
-        <releaseNotes>Documentation bug fixes.</releaseNotes>
+        <releaseNotes>Applied fix for ceiled euclidean distance function, added optimal tour for pla33810 tsp problem.</releaseNotes>
         <copyright />
         <language>en-US</language>
         <tags>TSP, traveling salesman problem</tags>
@@ -198,6 +198,7 @@
         <file src="..\..\TSPLIB95\tsp\pcb442.opt.tour" target="TSPLIB95\tsp\pcb442.opt.tour" />
         <file src="..\..\TSPLIB95\tsp\pcb442.tsp" target="TSPLIB95\tsp\pcb442.tsp" />
         <file src="..\..\TSPLIB95\tsp\pla33810.tsp" target="TSPLIB95\tsp\pla33810.tsp" />
+		<file src="..\..\TSPLIB95\tsp\pla33810.opt.tour" target="TSPLIB95\tsp\pla33810.opt.tour" />
         <file src="..\..\TSPLIB95\tsp\pla7397.tsp" target="TSPLIB95\tsp\pla7397.tsp" />
         <file src="..\..\TSPLIB95\tsp\pla85900.tsp" target="TSPLIB95\tsp\pla85900.tsp" />
         <file src="..\..\TSPLIB95\tsp\pr1002.opt.tour" target="TSPLIB95\tsp\pr1002.opt.tour" />
