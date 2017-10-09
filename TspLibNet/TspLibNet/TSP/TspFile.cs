@@ -19,6 +19,9 @@
 * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
+using System.Text;
+
 namespace TspLibNet.TSP
 {
     using System.Collections.Generic;
@@ -44,7 +47,7 @@ namespace TspLibNet.TSP
         /// Gets file comment - additional comments from problem author
         /// </summary>
         public string Comment;
-                
+
         /// <summary>
         /// Gets problem dimension, for TSP and ATSP is a number of nodes. For CVRP total number of nodes and depots. For tour it is a dimension of coresponding problem.
         /// </summary>
@@ -64,7 +67,7 @@ namespace TspLibNet.TSP
         /// Describes format of the edge weights if are given explicitly
         /// </summary>
         public EdgeWeightFormat EdgeWeightFormat = EdgeWeightFormat.Function;
-        
+
         /// <summary>
         /// Describes the format in which the edges of a grap are given, if the graph is not complete
         /// </summary>
@@ -135,6 +138,26 @@ namespace TspLibNet.TSP
                 reader.Close();
             }
 
+            return result;
+        }
+
+        /// <summary>
+        /// Loads TSP from string
+        /// </summary>
+        /// <param name="content">tsp task</param>
+        /// <returns>Load tsp file</returns>
+        public static TspFile LoadFromString(string content)
+        {
+            TspFile result = null;
+            TspFileLoader loader = new TspFileLoader();
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(content)))
+            {
+                using (StreamReader reader = new StreamReader(ms))
+                {
+                    result = loader.Load(reader);
+                    reader.Close();
+                }
+            }
             return result;
         }
     }

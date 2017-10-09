@@ -80,6 +80,11 @@ namespace TspLibNet
             return FromTspFile(TspFile.Load(fileName));
         }
 
+        public static TravelingSalesmanProblem FromString(string content)
+        {
+            return FromTspFile(TspFile.LoadFromString(content));
+        }
+
         /// <summary>
         /// Create problem from list of nodes
         /// </summary>
