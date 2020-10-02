@@ -30,7 +30,7 @@ namespace TspLibNetTests
     [TestClass]
     public class TspDistanceCalculationTests
     {
-        private const string RootDir = @"..\..\..\..\TSPLIB95";
+        private const string RootDir = @"..\..\..\..\..\TSPLIB95";
 
         [TestMethod]
         public void VerifyPcb442CanonicalTsp()

@@ -6,6 +6,8 @@ TSPLib.Net is a C# .Net wrapper library for [TSPLIB](http://comopt.ifi.uni-heide
 ### How do I get it?
 
 Install it from [NuGet](https://www.nuget.org/packages/TSPLib.Net/), or download from [releases](https://github.com/goblincoding/TSPLib.Net/releases).
+The nuget package only contains the library. Nuget packages cannot copy contents to target projects.
+Thus, the TSPLIB95 directory must be copied to your solution directory manualy.
 
 ### TSPLIB95
 

@@ -1,126 +1,36 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A5F17DFD-80C3-4F1F-B85F-F30E24E6F158}</ProjectGuid>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TspLibNet</RootNamespace>
-    <AssemblyName>TspLibNet</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>bin\Release\TspLibNet.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression></PackageLicenseExpression>
+    <PackageId>TSPLib.Net</PackageId>
+    <Version>1.1.6</Version>
+    <Authors>Pawel Drozdowski, William Hallatt</Authors>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/pdrozdowski/TSPLib.Net</PackageProjectUrl>
+    <PackageReleaseNotes>Migrated to .net core.</PackageReleaseNotes>
+    <PackageTags>TSP, traveling salesman problem</PackageTags>
+    <RepositoryUrl>https://github.com/pdrozdowski/TSPLib.Net</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DistanceFunctions\DistanceFunctionBase.cs" />
-    <Compile Include="Exceptions\TourInvalidException.cs" />
-    <Compile Include="Exceptions\GraphException.cs" />
-    <Compile Include="Graph\Demand\DictionaryBasedDemandProvider.cs" />
-    <Compile Include="Graph\Demand\IDemandProvider.cs" />
-    <Compile Include="Graph\Depots\IDepotsProvider.cs" />
-    <Compile Include="Graph\Depots\NodeListBasedDepotProvider.cs" />
-    <Compile Include="Graph\Edges\Edge.cs" />
-    <Compile Include="Graph\Edges\EdgeListBasedEdgeProvider.cs" />
-    <Compile Include="Graph\Edges\IEdgeProvider.cs" />
-    <Compile Include="Graph\Edges\WeightMatrixBasedEdgeProvider.cs" />
-    <Compile Include="Graph\Edges\NodeBasedEdgeProvider.cs" />
-    <Compile Include="Graph\Edges\WeightMatrixBasedEdgeProviderWithExclusions.cs" />
-    <Compile Include="Graph\EdgeWeights\FunctionBasedWeightProviderWithCaching.cs" />
-    <Compile Include="Graph\FixedEdges\EdgeListBasedFixedEdgesProvider.cs" />
-    <Compile Include="Graph\FixedEdges\IFixedEdgesProvider.cs" />
-    <Compile Include="Graph\Nodes\EdgeListBasedNodeProvider.cs" />
-    <Compile Include="Graph\Nodes\INodeProvider.cs" />
-    <Compile Include="Graph\Nodes\DimensionBasedNodeProvider.cs" />
-    <Compile Include="Graph\Nodes\NodeListBasedNodeProvider.cs" />
-    <Compile Include="IProblem.cs" />
-    <Compile Include="NodesFactory.cs" />
-    <Compile Include="TspLib95.cs" />
-    <Compile Include="TspLib95Item.cs" />
-    <Compile Include="TSP\TspFileDataExtractor.cs" />
-    <Compile Include="Graph\EdgeWeights\NodeAdjacencyBasedWeightProvider.cs" />
-    <Compile Include="Graph\Edges\EdgesCollection.cs" />
-    <Compile Include="Graph\Nodes\Node.cs" />
-    <Compile Include="Graph\Nodes\NodesCollection.cs" />
-    <Compile Include="CapacitatedVehicleRoutingProblem.cs" />
-    <Compile Include="HamiltonianCycleProblem.cs" />
-    <Compile Include="ProblemBase.cs" />
-    <Compile Include="SequentialOrderingProblem.cs" />
-    <Compile Include="TravelingSalesmanProblem.cs" />
-    <Compile Include="Tours\ITour.cs" />
-    <Compile Include="Tours\Tour.cs" />
-    <Compile Include="DistanceFunctions\IDistanceFunction.cs" />
-    <Compile Include="Graph\Edges\IEdge.cs" />
-    <Compile Include="Graph\Nodes\INode.cs" />
-    <Compile Include="Graph\EdgeWeights\IEdgeWeightsProvider.cs" />
-    <Compile Include="Graph\EdgeWeights\FunctionBasedWeightProvider.cs" />
-    <Compile Include="Graph\EdgeWeights\MatrixBasedWeightProvider.cs" />
-    <Compile Include="Graph\EdgeWeights\MatrixBuilder.cs" />
-    <Compile Include="TSP\Defines\DisplayDataType.cs" />
-    <Compile Include="TSP\Defines\EdgeDataFormat.cs" />
-    <Compile Include="TSP\Defines\EdgeWeightFormat.cs" />
-    <Compile Include="TSP\Defines\EdgeWeightType.cs" />
-    <Compile Include="TSP\Defines\FileType.cs" />
-    <Compile Include="Graph\Nodes\Node3D.cs" />
-    <Compile Include="DistanceFunctions\Euclidean.cs" />
-    <Compile Include="DistanceFunctions\EuclideanCeiled.cs" />
-    <Compile Include="DistanceFunctions\Geographical.cs" />
-    <Compile Include="DistanceFunctions\Manhattan.cs" />
-    <Compile Include="DistanceFunctions\Maximum.cs" />
-    <Compile Include="DistanceFunctions\PseudoEuclidean.cs" />
-    <Compile Include="DistanceFunctions\GeoLocation.cs" />
-    <Compile Include="Extensions\MathExtensions.cs" />
-    <Compile Include="TSP\Defines\NodeCoordinatesType.cs" />
-    <Compile Include="TSP\TspFile.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TSP\TspFileLoader.cs" />
-    <Compile Include="Graph\Nodes\Node2D.cs" />
+    <Content Include="..\..\README.md">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
+    </Content>
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

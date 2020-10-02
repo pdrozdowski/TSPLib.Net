@@ -9,7 +9,7 @@ namespace TspLibNetTests
     [TestClass]
     public class TspLib95Tests
     {
-        private const string RootDir = @"..\..\..\..\TSPLIB95";
+        private const string RootDir = @"..\..\..\..\..\TSPLIB95";
 
         [TestMethod]
         public void TspLibPathValid()
