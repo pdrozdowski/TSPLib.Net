@@ -21,6 +21,6 @@ Capacitated vehicle routing problem (CVRP)
 ==========================================
 We are given n-1 nodes, one depot and distances from the nodes to the depot, as well as between nodes. All nodes have demands which can be satisfied by the depot. For delivery to the nodes, trucks with identical capacities are available. The problem is to find tours for the trucks of minimal total length that satisfy the node demands without violating truck capacity constraint. The number of trucks is not specified. Each tour visits a subset of the nodes and starts and terminates at the depot. (Remark: In some data files a collection of alternate depots is given. A CVRP is then given by selecting one of these depots.)
 
-All files version from 12th Jan 2014
+All files version from October the 2nd, 2020.
 Check DOC.PS or DOC.PDF for original description of problems, used functions and file formats.
 

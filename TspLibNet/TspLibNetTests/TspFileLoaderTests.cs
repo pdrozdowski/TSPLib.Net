@@ -34,7 +34,7 @@ namespace TspLibNetTests
     [TestClass]
     public class TspFileLoaderTests
     {
-        private const string RootDir = @"..\..\..\..\TSPLIB95";
+        private const string RootDir = @"..\..\..\..\..\TSPLIB95";
 
         [TestMethod]
         public void LoadBerlin52Problem()
