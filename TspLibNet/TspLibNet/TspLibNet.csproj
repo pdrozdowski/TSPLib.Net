@@ -15,7 +15,7 @@
     <PackageId>TSPLib.Net</PackageId>
     <Version>1.1.6</Version>
     <Authors>Pawel Drozdowski, William Hallatt</Authors>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/pdrozdowski/TSPLib.Net</PackageProjectUrl>
     <PackageReleaseNotes>Migrated to .net core.</PackageReleaseNotes>
     <PackageTags>TSP, traveling salesman problem</PackageTags>
