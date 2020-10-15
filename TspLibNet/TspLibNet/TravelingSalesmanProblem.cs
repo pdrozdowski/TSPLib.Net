@@ -115,7 +115,7 @@ namespace TspLibNet
             double distance = 0;
             for (int i = -1; i + 1 < tour.Nodes.Count; i++)
             {
-                INode first = i == -1 ? NodeProvider.GetNode(tour.Nodes.Last()) : NodeProvider.GetNode(tour.Nodes[i]);
+                INode first = i == -1 ? NodeProvider.GetNode(tour.Nodes[tour.Nodes.Count - 1]) : NodeProvider.GetNode(tour.Nodes[i]);
                 INode second = NodeProvider.GetNode(tour.Nodes[i + 1]);
                 double weight = EdgeWeightsProvider.GetWeight(first, second);
                 distance += weight;
