@@ -55,7 +55,7 @@ namespace TspLibNet.Graph.Depots
         /// <returns>List of nodes</returns>
         public List<INode> GetDepots()
         {
-            return new List<INode>(this.Nodes);
+            return new List<INode>(this.Nodes.ToList());
         }
 
         /// <summary>
