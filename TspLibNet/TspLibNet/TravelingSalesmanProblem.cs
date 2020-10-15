@@ -100,7 +100,7 @@ namespace TspLibNet
             var nodeProvider = new NodeListBasedNodeProvider(nodes);
             var edgeProvider = new NodeBasedEdgeProvider(nodes);
             var edgeWeightsProvider = new FunctionBasedWeightProviderWithCaching(new Euclidean());
-            var fixedEdgesProvider = new EdgeListBasedFixedEdgesProvider(new EdgesCollection());
+            var fixedEdgesProvider = new EdgeListBasedFixedEdgesProvider();
             return new TravelingSalesmanProblem(nodes.Count + " city TSP problem", "Generated", ProblemType.ATSP, nodeProvider, edgeProvider, edgeWeightsProvider, fixedEdgesProvider);
         }
 
