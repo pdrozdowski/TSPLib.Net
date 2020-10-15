@@ -33,6 +33,14 @@ namespace TspLibNet.Graph.FixedEdges
         /// <summary>
         /// Creates new instance of a EdgeListBasedFixedEdgesProvider class.
         /// </summary>
+        public EdgeListBasedFixedEdgesProvider()
+        {
+            this.FixedEdges = new EdgesCollection();
+        }
+
+        /// <summary>
+        /// Creates new instance of a EdgeListBasedFixedEdgesProvider class.
+        /// </summary>
         /// <param name="fixedEdges">list of fixed edges</param>
         public EdgeListBasedFixedEdgesProvider(IEnumerable<IEdge> fixedEdges)
         {
@@ -55,7 +63,7 @@ namespace TspLibNet.Graph.FixedEdges
         /// <returns>List of fixed edges</returns>
         public List<IEdge> GetFixedEdges()
         {
-            return new List<IEdge>(this.FixedEdges);
+            return new List<IEdge>(this.FixedEdges.ToList());
         }
 
         /// <summary>

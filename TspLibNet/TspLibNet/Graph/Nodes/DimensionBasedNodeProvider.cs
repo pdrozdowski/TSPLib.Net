@@ -58,7 +58,7 @@ namespace TspLibNet.Graph.Nodes
         /// <returns>List of nodes</returns>
         public List<INode> GetNodes()
         {
-            return new List<INode>(this.Nodes);
+            return new List<INode>(this.Nodes.ToList());
         }
 
         /// <summary>

@@ -22,17 +22,22 @@
 namespace TspLibNet.Graph.Nodes
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Strongly typed nodes collection
     /// </summary>
-    public class NodesCollection : List<INode>
+    public class NodesCollection
     {
+        private readonly Dictionary<int, INode> _idToNodes;
+        private List<INode> _valueCache;
+
         /// <summary>
         /// Creates new instance of NodesCollection
         /// </summary>
         public NodesCollection()
         {
+            _idToNodes = new Dictionary<int, INode>();
         }
 
         /// <summary>
@@ -40,8 +45,16 @@ namespace TspLibNet.Graph.Nodes
         /// </summary>
         /// <param name="nodes">range of nodes to add initially</param>
         public NodesCollection(IEnumerable<INode> nodes)
-            : base(nodes)
         {
+            _idToNodes = nodes.ToDictionary(n => n.Id);
+        }
+
+        public int Count => _idToNodes.Count;
+
+        public void Add(INode node)
+        {
+            _idToNodes.Add(node.Id, node);
+            _valueCache = null;
         }
 
         /// <summary>
@@ -51,15 +64,19 @@ namespace TspLibNet.Graph.Nodes
         /// <returns>node with given id or null</returns>
         public INode FindById(int id)
         {
-            foreach (INode node in this)
-            {
-                if (node.Id == id)
-                {
-                    return node;
-                }
-            }
+            var found = _idToNodes.TryGetValue(id, out var node);
 
-            return null;
+            return found ? node : null;
+        }
+
+        public bool Contains(INode first)
+        {
+            return _idToNodes.ContainsKey(first.Id);
+        }
+
+        public List<INode> ToList()
+        {
+            return _valueCache ?? (_valueCache = _idToNodes.Values.ToList());
         }
     }
 }

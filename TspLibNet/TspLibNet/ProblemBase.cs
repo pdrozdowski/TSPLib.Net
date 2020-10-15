@@ -121,7 +121,8 @@ namespace TspLibNet
         /// Gets tour distance for a given problem
         /// </summary>
         /// <param name="tour">Tour to check</param>
+        /// <param name="validate">Validate the tour</param>
         /// <returns>Tour distance</returns>
-        public abstract double TourDistance(ITour tour);
+        public abstract double TourDistance(ITour tour, bool validate = true);
     }
 }
