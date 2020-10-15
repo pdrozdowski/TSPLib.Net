@@ -88,10 +88,13 @@ namespace TspLibNet
         /// Gets tour distance for a given problem
         /// </summary>
         /// <param name="tour">Tour to check</param>
+        /// <param name="validate">Validate the tour</param>
         /// <returns>Tour distance</returns>
-        public override double TourDistance(ITour tour)
+        public override double TourDistance(ITour tour, bool validate = true)
         {
-            ValidateTour(tour);
+            if (validate)
+                ValidateTour(tour);
+
             double distance = 0;
             for (int i = -1; i + 1 < tour.Nodes.Count; i++)
             {

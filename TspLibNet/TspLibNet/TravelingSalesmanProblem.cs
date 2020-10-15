@@ -108,10 +108,13 @@ namespace TspLibNet
         /// Gets tour distance for a given problem
         /// </summary>
         /// <param name="tour">Tour to check</param>
+        /// <param name="validate">Validate the tour</param>
         /// <returns>Tour distance</returns>
-        public override double TourDistance(ITour tour)
+        public override double TourDistance(ITour tour, bool validate = true)
         {
-            ValidateTour(tour);
+            if (validate)
+                ValidateTour(tour);
+
             double distance = 0;
             for (int i = -1; i + 1 < tour.Nodes.Count; i++)
             {
@@ -140,8 +143,17 @@ namespace TspLibNet
                 throw new TourInvalidException("Tour dimension does not match number of nodes on a list");
             }
 
-            HashSet<int> identifiers = new HashSet<int>();
-            foreach (int nodeId in tour.Nodes)
+            // Fast check for the sake of speed.
+            var set = new HashSet<int>(tour.Nodes);
+            set.UnionWith(NodeProvider.GetNodes().Select(n => n.Id));
+
+            if (set.Count == tour.Nodes.Count)
+                return;
+
+            // Slow check for a more detailed exception message.
+            var identifiers = new HashSet<int>();
+
+            foreach (var nodeId in tour.Nodes)
             {
                 if (identifiers.Contains(nodeId))
                 {
