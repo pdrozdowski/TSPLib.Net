@@ -199,7 +199,7 @@ namespace TspLibNet.TSP
                 result.Add(graphNodes.FindById(id));
             }
 
-            return result;
+            return result.ToList();
         }
 
         /// <summary>

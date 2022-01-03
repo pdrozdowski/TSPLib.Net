@@ -22,15 +22,17 @@
 namespace TspLibNet.TSP
 {
     using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Text;
 
     /// <summary>
     /// Loads TSP files
     /// </summary>
     public class TspFileLoader
     {
+        private static readonly char[] Separator = {' ', '\t', '\r', '\n'};
+
         /// <summary>
         /// Loads TSP File structure from a stream
         /// </summary>
@@ -61,43 +63,43 @@ using System.Text;
                 string line = section[0];
                 if (line.StartsWith("Name", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    tspFile.Name = this.ReadStringFromLine("Name", line);
+                    tspFile.Name = this.ReadStringFromLine(line);
                 }
                 else if(line.StartsWith("Type", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    tspFile.Type = this.ReadFileTypeFromLine("Type", line);
+                    tspFile.Type = this.ReadFileTypeFromLine(line);
                 }
                 else if (line.StartsWith("Comment", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    tspFile.Comment = this.ReadStringFromLine("Comment", line);
+                    tspFile.Comment = this.ReadStringFromLine(line);
                 }
                 else if (line.StartsWith("Dimension", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    tspFile.Dimension = this.ReadIntFromLine("Dimension", line);
+                    tspFile.Dimension = this.ReadIntFromLine(line);
                 }
                 else if (line.StartsWith("Capacity", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    tspFile.Capacity = this.ReadIntFromLine("Capacity", line);
+                    tspFile.Capacity = this.ReadIntFromLine(line);
                 }
                 else if (line.StartsWith("Edge_Weight_Type", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    tspFile.EdgeWeightType = this.ReadEdgeWeightTypeFromLine("Edge_Weight_Type", line);
+                    tspFile.EdgeWeightType = this.ReadEdgeWeightTypeFromLine(line);
                 }
                 else if (line.StartsWith("Edge_Weight_Format", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    tspFile.EdgeWeightFormat = this.ReadEdgeWeightFormatFromLine("Edge_Weight_Format", line);
+                    tspFile.EdgeWeightFormat = this.ReadEdgeWeightFormatFromLine(line);
                 }
                 else if (line.StartsWith("Edge_Data_Format", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    tspFile.EdgeDataFormat = this.ReadEdgeDataFormatFromLine("Edge_Data_Format", line);
+                    tspFile.EdgeDataFormat = this.ReadEdgeDataFormatFromLine(line);
                 }
                 else if (line.StartsWith("Node_Coord_Type", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    tspFile.NodeCoordinatesType = this.ReadNodeCoordinatesTypeFromLine("Node_Coord_Type", line);
+                    tspFile.NodeCoordinatesType = this.ReadNodeCoordinatesTypeFromLine(line);
                 }
                 else if (line.StartsWith("Display_Data_Type", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    tspFile.DisplayDataType = this.ReadDisplayDataTypeFromLine("Display_Data_Type", line);
+                    tspFile.DisplayDataType = this.ReadDisplayDataTypeFromLine(line);
                 }                
                 else if (line.StartsWith("Node_Coord_Section", StringComparison.InvariantCultureIgnoreCase))
                 {
@@ -109,53 +111,53 @@ using System.Text;
 
                     if(tspFile.NodeCoordinatesType == Defines.NodeCoordinatesType.Coordinates2D)
                     {
-                        tspFile.Nodes = this.ReadIntAndDoublesArrayList("Node_Coord_Section", section);
+                        tspFile.Nodes = this.ReadIntAndDoublesArrayList(section);
                     }
                     else if(tspFile.NodeCoordinatesType == Defines.NodeCoordinatesType.Coordinates3D)
                     {
-                        tspFile.Nodes = this.ReadIntAndDoublesArrayList("Node_Coord_Section", section);
+                        tspFile.Nodes = this.ReadIntAndDoublesArrayList(section);
                     }
                     else throw new NotSupportedException();
                 }
                 else if (line.StartsWith("Depot_Section", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    tspFile.Depots = this.ReadIntList("Depot_Section", section);
+                    tspFile.Depots = this.ReadIntList(section);
                 }
                 else if (line.StartsWith("Demand_Section", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    tspFile.Demands = this.ReadIntsArrayList("Demand_Section", section);
+                    tspFile.Demands = this.ReadIntsArrayList(section);
                 }
                 else if (line.StartsWith("Edge_Data_Section", StringComparison.InvariantCultureIgnoreCase))
                 {
                     if (tspFile.EdgeDataFormat == Defines.EdgeDataFormat.EdgeList)
                     {
-                        tspFile.Edges = this.ReadIntsArrayList("Edge_Data_Section", section);
+                        tspFile.Edges = this.ReadIntsArrayList(section);
                     }
                     else if (tspFile.EdgeDataFormat == Defines.EdgeDataFormat.AdjacencyList)
                     {
-                        tspFile.Edges = this.ReadIntsArrayList("Edge_Data_Section", section);
+                        tspFile.Edges = this.ReadIntsArrayList(section);
                     }
                     else throw new NotSupportedException();
                 }
                 else if (line.StartsWith("Fixed_Edges", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    tspFile.FixedEdges = this.ReadIntsArrayList("Fixed_Edges", section);
+                    tspFile.FixedEdges = this.ReadIntsArrayList(section);
                 }
                 else if (line.StartsWith("Display_Data_Section", StringComparison.InvariantCultureIgnoreCase))
                 {
                     if(tspFile.DisplayDataType == Defines.DisplayDataType.Display2D)
                     {
-                        tspFile.DisplayNodes = this.ReadIntAndDoublesArrayList("Display_Data_Section", section);
+                        tspFile.DisplayNodes = this.ReadIntAndDoublesArrayList(section);
                     }
                     else throw new NotSupportedException();
                 }
                 else if (line.StartsWith("Tour_Section", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    tspFile.Tour = this.ReadIntList("Tour_Section", section);
+                    tspFile.Tour = this.ReadIntList(section);
                 }
                 else if (line.StartsWith("Edge_Weight_Section", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    tspFile.EdgeWeights = this.ReadDoubleList("Edge_Weight_Section", section);
+                    tspFile.EdgeWeights = this.ReadDoubleList(section);
                 }
                 else if (line.StartsWith("EOF", StringComparison.InvariantCultureIgnoreCase))
                 {
@@ -214,7 +216,7 @@ using System.Text;
             return sections;
         }
 
-        private Defines.FileType ReadFileTypeFromLine(string sectionName, string line)
+        private Defines.FileType ReadFileTypeFromLine(string line)
         {
             int index = line.IndexOf(':');
             if (index > 0)
@@ -236,7 +238,7 @@ using System.Text;
             throw new NotSupportedException();
         }
 
-        private Defines.DisplayDataType ReadDisplayDataTypeFromLine(string sectionName, string line)
+        private Defines.DisplayDataType ReadDisplayDataTypeFromLine(string line)
         {
             int index = line.IndexOf(':');
             if (index > 0)
@@ -252,7 +254,7 @@ using System.Text;
             throw new NotSupportedException();
         }
 
-        private Defines.EdgeDataFormat ReadEdgeDataFormatFromLine(string sectionName, string line)
+        private Defines.EdgeDataFormat ReadEdgeDataFormatFromLine(string line)
         {
             int index = line.IndexOf(':');
             if (index > 0)
@@ -266,7 +268,7 @@ using System.Text;
             throw new NotSupportedException();
         }
 
-        private Defines.EdgeWeightFormat ReadEdgeWeightFormatFromLine(string sectionName, string line)
+        private Defines.EdgeWeightFormat ReadEdgeWeightFormatFromLine(string line)
         {
             int index = line.IndexOf(':');
             if (index > 0)
@@ -298,7 +300,7 @@ using System.Text;
             throw new NotSupportedException();
         }
 
-        private Defines.EdgeWeightType ReadEdgeWeightTypeFromLine(string sectionName, string line)
+        private Defines.EdgeWeightType ReadEdgeWeightTypeFromLine(string line)
         {
             int index = line.IndexOf(':');
             if (index > 0)
@@ -334,7 +336,7 @@ using System.Text;
             throw new NotSupportedException();
         }
 
-        private Defines.NodeCoordinatesType ReadNodeCoordinatesTypeFromLine(string sectionName, string line)
+        private Defines.NodeCoordinatesType ReadNodeCoordinatesTypeFromLine(string line)
         {
             int index = line.IndexOf(':');
             if (index > 0)
@@ -350,7 +352,7 @@ using System.Text;
             throw new NotSupportedException();
         }
         
-        private string ReadStringFromLine(string sectionName, string line)
+        private string ReadStringFromLine(string line)
         {
             int index = line.IndexOf(':');
             if (index > 0)
@@ -358,7 +360,7 @@ using System.Text;
             return line;
         }
 
-        private int ReadIntFromLine(string sectionName, string line)
+        private int ReadIntFromLine(string line)
         {
             int index = line.IndexOf(':');
             if (index > 0)
@@ -366,7 +368,7 @@ using System.Text;
             return int.Parse(line);
         }
 
-        private List<int> ReadIntList(string sectionName, string[] lines)
+        private List<int> ReadIntList(string[] lines)
         {
             List<int> result = new List<int>();
             StringBuilder builder = new StringBuilder();
@@ -376,7 +378,7 @@ using System.Text;
                 builder.Append(' ');
             }
 
-            foreach(string data in builder.ToString().Split(new[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
+            foreach(string data in builder.ToString().Split(Separator, StringSplitOptions.RemoveEmptyEntries))
             {
                 int value = int.Parse(data);
                 if (value == -1)
@@ -388,7 +390,7 @@ using System.Text;
             return result;
         }
 
-        private List<double> ReadDoubleList(string sectionName, string[] lines)
+        private List<double> ReadDoubleList(string[] lines)
         {
             List<double> result = new List<double>();
             StringBuilder builder = new StringBuilder();
@@ -398,7 +400,7 @@ using System.Text;
                 builder.Append(' ');
             }
 
-            foreach (string data in builder.ToString().Split(new[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (string data in builder.ToString().Split(Separator, StringSplitOptions.RemoveEmptyEntries))
             {
                 double value = double.Parse(data);
                 result.Add(value);
@@ -407,14 +409,14 @@ using System.Text;
             return result;
         }
 
-        private List<int[]> ReadIntsArrayList(string sectionName, string[] lines)
+        private List<int[]> ReadIntsArrayList(string[] lines)
         {
             List<int[]> result = new List<int[]>();
-            StringBuilder builder = new StringBuilder();
+
             for (int i = 1; i < lines.Length; i++)
             {
                 List<int> array = new List<int>();
-                foreach (string data in lines[i].Split(new[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (string data in lines[i].Split(Separator, StringSplitOptions.RemoveEmptyEntries))
                 {
                     array.Add(int.Parse(data));
                 }
@@ -425,14 +427,15 @@ using System.Text;
             return result;
         }
         
-        private List<object[]> ReadIntAndDoublesArrayList(string sectionName, string[] lines)
+        private List<object[]> ReadIntAndDoublesArrayList(string[] lines)
         {
             List<object[]> result = new List<object[]>();
-            StringBuilder builder = new StringBuilder();
+
             for (int i = 1; i < lines.Length; i++)
             {
-                List<object> array = new List<object>();
-                string[] data = lines[i].Split(new[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                List<object> array = new List<object>(3);
+                string[] data = lines[i].Split(Separator, StringSplitOptions.RemoveEmptyEntries);
+
                 for (int j = 0; j < data.Length; j++)
                 {
                     if (j == 0)
@@ -441,7 +444,7 @@ using System.Text;
                     }
                     else
                     {
-                        array.Add(double.Parse(data[j], System.Globalization.NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat));
+                        array.Add(double.Parse(data[j], NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat));
                     }
                 }
 

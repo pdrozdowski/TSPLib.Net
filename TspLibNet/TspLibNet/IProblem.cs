@@ -74,8 +74,9 @@ namespace TspLibNet
         /// Gets tour distance for a given problem
         /// </summary>
         /// <param name="tour">Tour to check</param>
+        /// <param name="validate">Validate the tour</param>
         /// <returns>Tour distance</returns>
-        double TourDistance(ITour tour);
+        double TourDistance(ITour tour, bool validate = true);
 
         /// <summary>
         /// Gets nodes provider
